@@ -94,7 +94,7 @@ public class Spawner : MonoBehaviour {
             if (prefab.power < sum) availableEnemies.Add(prefab);
         }
 
-        int maxIters = 30, iters = 0;
+        int maxIters = 100, iters = 0;
         bool keepGoing = true;
         // Debug.Log(availableEnemies.Count);
         while (keepGoing && iters < maxIters) {
