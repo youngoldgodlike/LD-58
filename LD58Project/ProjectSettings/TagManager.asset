@@ -13,6 +13,7 @@ TagManager:
   - UI
   - Field
   - Player
+  - UITerminal
   - Enemy
   - 
   - 

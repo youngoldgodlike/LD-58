@@ -7,39 +7,64 @@ namespace Main.Scripts
     public class Tower : MonoBehaviour
     {
         [SerializeField] private Transform _projectileSpawner;
-
         [SerializeField] private Spawner _spawner;
-        
+        [SerializeField] private Player _player;
+
+
         [Header("Fireballs")]
         [SerializeField] private FireBall _fireballPrefab;
+
         [SerializeField] private float _fireballsCooldown = 5f;
         [SerializeField] private float _fireballsCastDuration = 1f;
         [SerializeField] private int _fireballsCount = 2;
 
+
         [Header("Laser")]
         [SerializeField] private LineRenderer _laserLineRenderer;
+
         [SerializeField] private float _laserHitDelay = 0.5f;
         [SerializeField] private float _laserDamage = 1;
 
         private Coroutine _laserRoutine;
-        
+        private Coroutine _fireBallRoutine;
+        private Coroutine _delayBeforeStartAttack;
+
         private void Start()
         {
             _spawner.Initialize();
             
             _laserLineRenderer.positionCount = 2;
             
-            StartCoroutine(FireBallRoutine());
-            _laserRoutine = StartCoroutine(LaserRoutine());
             StartCoroutine(RotateEyeRoutine());
         }
 
+        private IEnumerator DelayBeforeAttackRoutine()
+        {
+            yield return new WaitForSeconds(2.5f);
+            
+            _fireBallRoutine = StartCoroutine(FireBallRoutine());
+            _laserRoutine = StartCoroutine(LaserRoutine());
+        }
+        
+        public void StartAttack()
+        {
+            _delayBeforeStartAttack = StartCoroutine(DelayBeforeAttackRoutine());
+        }
 
+        public void StopAttack()
+        {
+            if (_delayBeforeStartAttack != null)
+                StopCoroutine(_delayBeforeStartAttack);
+            
+            StopCoroutine(_fireBallRoutine);
+            StopCoroutine(_laserRoutine);
+        }
+        
         private IEnumerator RotateEyeRoutine()
         {
             while (true)
             {
-                _projectileSpawner.Rotate(Vector3.forward * 50 * Time.deltaTime);
+                _projectileSpawner.LookAt(_player.transform);
                 yield return null;
             }
         }
