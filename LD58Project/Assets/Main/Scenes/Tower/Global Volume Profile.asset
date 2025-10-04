@@ -16,6 +16,22 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &-4661822044771059757
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: PixelizeVolume
+  m_EditorClassIdentifier: Assembly-CSharp::PixelizeVolume
+  active: 1
+  screenHeight:
+    m_OverrideState: 0
+    m_Value: 144
 --- !u!114 &-1787877829701779246
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -114,6 +130,7 @@ MonoBehaviour:
   - {fileID: 4726179743702311950}
   - {fileID: 4932706432577865763}
   - {fileID: -1656141098995877539}
+  - {fileID: -4661822044771059757}
 --- !u!114 &4726179743702311950
 MonoBehaviour:
   m_ObjectHideFlags: 3
