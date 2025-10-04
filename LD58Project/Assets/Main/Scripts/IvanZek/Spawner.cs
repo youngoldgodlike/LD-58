@@ -68,7 +68,8 @@ public class Spawner : MonoBehaviour {
                 var enemy = Instantiate(toSpawn);
                 _spawnedEnemies.Add(enemy);
                 enemy.transform.position = GetSpawnPosition();
-                enemy.Init();
+                enemy.Init(_spawnedEnemies.Count - 1);
+                enemy.OnDie += KillEnemy;
                 enemy.target = _player;
             }
             
@@ -133,8 +134,13 @@ public class Spawner : MonoBehaviour {
     [ContextMenu(nameof(KillRandom))]
     public void KillRandom() {
         int id = Random.Range(0, _spawnedEnemies.Count);
-        Destroy(_spawnedEnemies[id].gameObject);
         currentPower -= _spawnedEnemies[id].power;
+        Destroy(_spawnedEnemies[id].gameObject);
         _spawnedEnemies.RemoveAt(id);
+    }
+    void KillEnemy(Enemy enemy) {
+        currentPower -= enemy.power;
+        _spawnedEnemies.RemoveAt(enemy.id);
+        Destroy(enemy.gameObject);
     }
 }
