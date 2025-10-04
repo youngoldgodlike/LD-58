@@ -73,10 +73,7 @@ namespace Main.Scripts
             foreach (var collider in overlap)
             {
                 if (collider.TryGetComponent(out Enemy enemy))
-                {
                     enemy.TakeDamage(_damage);
-                    Debug.Log(enemy.health);
-                }
             }
         }
     }

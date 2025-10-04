@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Main.Scripts
@@ -8,29 +10,67 @@ namespace Main.Scripts
         [SerializeField] private float _mouseSensitivity = 2f;
         [SerializeField] private float _gravity = -9.81f;
         [SerializeField] private float _jumpHeight = 2f;
-        
+        [SerializeField] private Transform _cameraTransform;
 
+        private CinemachineCamera _cinemachineCamera;
         private CharacterController _characterMoveController;
         private bool _isGrounded;
         private Vector2 _moveDirection;
         private float _xRotation = 0f;
         private float _verticalVelocity;
-        private Transform _cameraTransform;
         private DesktopInput _input;
+
+        private bool _isActive;
+
+        private Coroutine _TurnActiveRoutine;
 
         private void Awake()
         {
-            _characterMoveController = GetComponent<CharacterController>();
-            _cameraTransform = Camera.main.transform;
+            _characterMoveController = GetComponent<CharacterController>(); ;
             _input = new DesktopInput();
+            _cinemachineCamera=  _cameraTransform.GetComponent<CinemachineCamera>();
+            
+            Enable();
         }
+
+        public void Enable(float delayBeforeEnable = 0)
+        {
+            _TurnActiveRoutine = StartCoroutine(EnableRoutine(delayBeforeEnable));
+        } 
+
+        private IEnumerator EnableRoutine(float delayBeforeEnable)
+        {
+            yield return new WaitForSeconds(delayBeforeEnable);
+            _isActive = true;
+        }
+
+        public void Disable()
+        {
+            if (_TurnActiveRoutine != null)
+                StopCoroutine(_TurnActiveRoutine);
+            
+            _isActive = false;
+        } 
     
         private void Update()
         {
+            if (!_isActive) return;
+            
             HandleGroundCheck();
             HandleJumping();
             HandleMovement();
         }
+
+        public void TurnOffCameraPriority()
+        {
+            _cinemachineCamera.Priority = -10;
+        }
+        
+        public void TurnOnCameraPriority()
+        {
+            _cinemachineCamera.Priority = 10;
+        }
+        
 
         private void LateUpdate()
         {
