@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour {
@@ -36,7 +37,11 @@ public class Spawner : MonoBehaviour {
             enemy.UpdateMe();
         }
     }
-    
+    void FixedUpdate() {
+        foreach (Enemy enemy in _spawnedEnemies) {
+            enemy.UpdateFixedMe();
+        }
+    }
 
     IEnumerator Procces() {
         while (true) {
@@ -63,6 +68,7 @@ public class Spawner : MonoBehaviour {
                 var enemy = Instantiate(toSpawn);
                 _spawnedEnemies.Add(enemy);
                 enemy.transform.position = GetSpawnPosition();
+                enemy.Init();
                 enemy.target = _player;
             }
             
@@ -79,7 +85,7 @@ public class Spawner : MonoBehaviour {
 
         int maxIters = 30, iters = 0;
         bool keepGoing = true;
-        Debug.Log(availableEnemies.Count);
+        // Debug.Log(availableEnemies.Count);
         while (keepGoing && iters < maxIters) {
             var enemy = availableEnemies[Random.Range(0, availableEnemies.Count)];
             enemies.Add(enemy);
@@ -101,10 +107,19 @@ public class Spawner : MonoBehaviour {
 
         return enemies;
     }
+
+    RaycastHit[] hits = new RaycastHit[1];
     Vector3 GetSpawnPosition() {
         float angle = Random.Range(0f, 360f);
         Vector3 direction = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
-        return (_player.position + direction * Random.Range(_spawnRadius.x, _spawnRadius.y)).WithY(_spawnY);
+        Vector3 targetSpawn = (_player.position + direction * Random.Range(_spawnRadius.x, _spawnRadius.y));
+        Debug.DrawRay(targetSpawn, Vector3.up, Color.red,10f);
+        if (Physics.RaycastNonAlloc(targetSpawn.WithY(30), Vector3.down, hits) > 0) {
+            return hits[0].point;
+        } else {
+            Debug.LogError($"No ground founded??");
+            return targetSpawn;
+        }
     }
 
     [ContextMenu(nameof(KillAll))]
