@@ -33,7 +33,9 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
+
     globalScale: 100
+
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
