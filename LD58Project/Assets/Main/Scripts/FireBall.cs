@@ -8,9 +8,11 @@ namespace Main.Scripts
         [SerializeField] private float _speed = 10;
         [SerializeField] private float _arcHeight = 5f;
         [SerializeField] private float _damage = 10;
+        [SerializeField] private float _exlposionRadius = 5;
         [SerializeField] private GameObject _explosionPrefab;
         [SerializeField] private Transform _outline;
         [SerializeField] private AnimationCurve _arcCurve;
+        [SerializeField] private LayerMask _ememyLayer;
         
         public void Attack(Transform target)
         {
@@ -59,8 +61,23 @@ namespace Main.Scripts
         {
             var explosion = Instantiate(_explosionPrefab);
             explosion.transform.position = transform.position;
-           
+            
+            var collision=  Physics.OverlapSphere(transform.position, _exlposionRadius);
+            GetDamage(collision);
+            
             Destroy(gameObject);
+        }
+
+        private void GetDamage(Collider[] overlap)
+        {
+            foreach (var collider in overlap)
+            {
+                if (collider.TryGetComponent(out Enemy enemy))
+                {
+                    enemy.TakeDamage(_damage);
+                    Debug.Log(enemy.health);
+                }
+            }
         }
     }
 }

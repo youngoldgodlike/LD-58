@@ -140,10 +140,12 @@ MonoBehaviour:
   _radius: 0.5
   _height: 3
   _hueto: 0
+  _meshRenderer: {fileID: 1358829345186488712}
   target: {fileID: 0}
-  health: 126.3
+  health: 60
   speed: 2
   power: 40
+  id: 0
 --- !u!195 &1174204396860062132
 NavMeshAgent:
   m_ObjectHideFlags: 0
