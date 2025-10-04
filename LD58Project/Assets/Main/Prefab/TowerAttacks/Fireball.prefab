@@ -236,7 +236,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c5c131373a47ec8c842b3a6e360eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.FireBall
-  _speed: 50
+  _speed: 25
+  _arcHeight: 5
   _damage: 10
   _explosionPrefab: {fileID: 1008554121580831414, guid: 9b2376427a7c66343bbd105a7aa91dfd, type: 3}
   _outline: {fileID: 1405270860864934204}
+  _arcCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0041389465
+      value: -0.0044898987
+      inSlope: 2.2615077
+      outSlope: 2.2615077
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.35434437
+      value: 0.7875024
+      inSlope: 0.50739986
+      outSlope: 0.50739986
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.988678
+      value: -0.003326416
+      inSlope: -1.246708
+      outSlope: -1.246708
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
