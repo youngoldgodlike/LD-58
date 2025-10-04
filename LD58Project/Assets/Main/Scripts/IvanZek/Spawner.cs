@@ -20,9 +20,9 @@ public class Spawner : MonoBehaviour {
     WaitForSeconds _wait;
 
     [Header("Runtime")]
-    public List<Enemy> _spawnedEnemies = new(40);
+    public List<Enemy> _spawnedEnemies  = new(40);
     
-    void Awake() {
+    public void Initialize() {
         _wait = new(_checkCooldown);
         foreach (Enemy enemy in _enemiesPrefab) {
             if (minEnemyPower > enemy.power) minEnemyPower = enemy.power;
@@ -140,7 +140,7 @@ public class Spawner : MonoBehaviour {
     }
     void KillEnemy(Enemy enemy) {
         currentPower -= enemy.power;
-        _spawnedEnemies.RemoveAt(enemy.id);
+        _spawnedEnemies.Remove(enemy);
         Destroy(enemy.gameObject);
     }
 }
