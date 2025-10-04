@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -17,13 +18,20 @@ public class Spawner : MonoBehaviour {
     [SerializeField] float _checkCooldown = 2f;
     [SerializeField] Vector2 _spawnRadius = new(5, 10);
     [SerializeField] float _spawnY = 0;
-    WaitForSeconds _wait;
 
     [Header("Runtime")]
     public List<Enemy> _spawnedEnemies  = new(40);
+
+    WaitForSeconds _wait;
+    WaitWhile _waitActivate;
+    bool _isActive = true;
     
+    [ContextMenu(nameof(Initialize))]
     public void Initialize() {
+        Debug.Log("Hello");
         _wait = new(_checkCooldown);
+        _waitActivate = new(() => _isActive == false);
+        
         foreach (Enemy enemy in _enemiesPrefab) {
             if (minEnemyPower > enemy.power) minEnemyPower = enemy.power;
         }
@@ -45,6 +53,8 @@ public class Spawner : MonoBehaviour {
 
     IEnumerator Procces() {
         while (true) {
+            if (_isActive == false) yield return _waitActivate;
+            
             if (currentPower >= requiredPower) {
                 yield return _wait;
                 continue;
@@ -68,7 +78,7 @@ public class Spawner : MonoBehaviour {
                 var enemy = Instantiate(toSpawn);
                 _spawnedEnemies.Add(enemy);
                 enemy.transform.position = GetSpawnPosition();
-                enemy.Init(_spawnedEnemies.Count - 1);
+                enemy.Init();
                 enemy.OnDie += KillEnemy;
                 enemy.target = _player;
             }
@@ -122,7 +132,13 @@ public class Spawner : MonoBehaviour {
             return targetSpawn;
         }
     }
-
+    
+    public void SetActive(bool value) {
+        _isActive = value;
+        foreach (Enemy e in _spawnedEnemies) {
+            e.SetActive(value);
+        }
+    }
     [ContextMenu(nameof(KillAll))]
     public void KillAll() {
         foreach (Enemy e in _spawnedEnemies) {
@@ -133,14 +149,20 @@ public class Spawner : MonoBehaviour {
     }
     [ContextMenu(nameof(KillRandom))]
     public void KillRandom() {
+        if(_spawnedEnemies.Count == 0) return;
         int id = Random.Range(0, _spawnedEnemies.Count);
-        currentPower -= _spawnedEnemies[id].power;
-        Destroy(_spawnedEnemies[id].gameObject);
-        _spawnedEnemies.RemoveAt(id);
+        KillEnemy(_spawnedEnemies[id]);
     }
     void KillEnemy(Enemy enemy) {
         currentPower -= enemy.power;
         _spawnedEnemies.Remove(enemy);
+        Tween.StopAll(enemy.transform);
         Destroy(enemy.gameObject);
+    }
+    public Enemy GetRandomEnemy() {
+        return _spawnedEnemies[Random.Range(0, _spawnedEnemies.Count)];
+    }
+    public Enemy GetClosestToPlayer() {
+        return null;
     }
 }

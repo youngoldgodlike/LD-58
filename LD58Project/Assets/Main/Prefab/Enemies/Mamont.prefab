@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4045057143624704799}
   - component: {fileID: 6648963761583842071}
   - component: {fileID: 1358829345186488712}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 2208172928594658676}
   - component: {fileID: 1174204396860062132}
   - component: {fileID: 6667024680766119448}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mamont
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,6 @@ MonoBehaviour:
   health: 60
   speed: 2
   power: 40
-  id: 0
 --- !u!195 &1174204396860062132
 NavMeshAgent:
   m_ObjectHideFlags: 0

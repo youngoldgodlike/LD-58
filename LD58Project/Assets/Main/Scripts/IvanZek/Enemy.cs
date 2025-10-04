@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Profiling;
@@ -9,25 +9,32 @@ public class Enemy : MonoBehaviour {
     [SerializeField] float _radius = 0.5f;
     [SerializeField] float _height = 1f;
     [SerializeField] bool _hueto;
-    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] MeshRenderer _meshRenderer;
 
     public Transform target;
     public float health;
     public float speed;
     public int power;
-    public int id;
 
     public event Action<Enemy> OnDie = delegate { };
+
+    Color _baseColor;
     
     void Awake() {
+        _baseColor = _meshRenderer.material.color;
         _agent.speed = speed;
         _agent.updateRotation = false;
     }
 
-    public void Init(int id) {
-        this.id = id;
+    public void Init() {
+        _agent.isStopped = true;
+        Tween.PositionY(transform, -_height, 0, 1f).OnComplete(this, enemy => enemy._agent.isStopped = false);
     }
 
+    public void SetActive(bool value) {
+        _agent.isStopped = value;
+    }
+    
     public void UpdateMe() {
         Profiler.BeginSample("Enemy Update");
         Vector3 pos = transform.position;
@@ -45,20 +52,15 @@ public class Enemy : MonoBehaviour {
         health = Mathf.Clamp(health - dmg, 0, health);
         if (health == 0) OnDie.Invoke(this);
 
-        StartCoroutine(RedNess());
+        if(Tween.GetTweensCount(_meshRenderer.material) > 0) return;
+        Tween.MaterialColor(_meshRenderer.material, Color.red, _baseColor, 0.5f);
     }
 
     [ContextMenu(nameof(Kill))]
     void Kill() {
         OnDie.Invoke(this);
     }
-
-    private IEnumerator RedNess()
-    {
-        _meshRenderer.material.color = Color.red;
-        yield return new WaitForSeconds(0.3f);
-        _meshRenderer.material.color = Color.white;
-    }
+    
     
     void OnTriggerEnter(Collider other) {
         // todo Deal damage to player

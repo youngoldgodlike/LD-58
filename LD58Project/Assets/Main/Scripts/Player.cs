@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Main.Scripts
 {
@@ -23,6 +24,7 @@ namespace Main.Scripts
             _characterMoveController = GetComponent<CharacterController>();
             _cameraTransform = Camera.main.transform;
             _input = new DesktopInput();
+            Cursor.lockState = CursorLockMode.Locked;
         }
     
         private void Update()
