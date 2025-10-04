@@ -7,7 +7,7 @@ namespace Main.Scripts
     {
         [SerializeField] private float _speed = 10;
         [SerializeField] private float _damage = 10;
-        [SerializeField] private ParticleSystem _particleSystem;
+        [SerializeField] private GameObject _explosionPrefab;
         [SerializeField] private Transform _outline;
         
         public void Attack(Transform target)
@@ -31,9 +31,9 @@ namespace Main.Scripts
 
         private void Explode()
         {
-           // var particleSystem = Instantiate(_particleSystem);
-           // particleSystem.transform.position = transform.position;
-           // particleSystem.Play();
+            var explosion = Instantiate(_explosionPrefab);
+            explosion.transform.position = transform.position;
+           
             Destroy(gameObject);
         }
     }

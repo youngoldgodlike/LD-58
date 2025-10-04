@@ -28,6 +28,17 @@ namespace Main.Scripts
             
             StartCoroutine(FireBallRoutine());
             StartCoroutine(LaserRoutine());
+            StartCoroutine(RotateEyeRoutine());
+        }
+
+
+        private IEnumerator RotateEyeRoutine()
+        {
+            while (true)
+            {
+                _projectileSpawner.Rotate(Vector3.forward * 50 * Time.deltaTime);
+                yield return null;
+            }
         }
 
         private IEnumerator LaserRoutine()
