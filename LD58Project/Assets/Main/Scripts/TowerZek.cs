@@ -24,6 +24,7 @@ public class TowerZek : MonoBehaviour
 
     [Header("Laser")]
     [SerializeField] Lazer _laserPrefab;
+    [SerializeField] GameObject _laserVFXPrefab;
     [SerializeField] List<Lazer> _lazers = new();
     [SerializeField] private float _laserHitDelay = 0.5f;
     [SerializeField] private float _laserDamage = 1;
@@ -58,6 +59,7 @@ public class TowerZek : MonoBehaviour
     }
 
     IEnumerator LaserRoutine(Transform laser) {
+        Transform laservfx = Instantiate(_laserVFXPrefab).transform;
         var enemies = _spawner._spawnedEnemies;
         WaitWhile waitEnemy = new(() => enemies.Count == 0);
 
@@ -84,8 +86,9 @@ public class TowerZek : MonoBehaviour
                     currentGroundPos += curDirection * (_laserSpeed * Time.deltaTime);
                     
                     Vector3 directionToNextPos = (currentGroundPos - _projectileSpawner.position).normalized;
-                    
+
                     laser.position = _projectileSpawner.position + directionToNextPos * laser.localScale.y;
+                    laservfx.position = currentGroundPos;
                     
                     Debug.DrawRay(laser.position, directionToNextPos, Color.green, 5f);
                     Vector3 levo = Vector3.Cross(directionToNextPos, Vector3.up);

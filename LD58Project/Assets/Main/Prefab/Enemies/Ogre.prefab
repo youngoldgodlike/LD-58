@@ -137,13 +137,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b751db0e7b68401ab0f7ea21d1fd57d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  _animator: {fileID: 0}
   _agent: {fileID: 7777902227357926923}
   _radius: 0.5
   _height: 1
-  _hueto: 0
   _meshRenderer: {fileID: 5948663001962528970}
   _skinned: {fileID: 7433570383504434321}
   _hitMat: {fileID: 2100000, guid: 4aeb33837d2e9bc4a92f04ae04a7e386, type: 2}
+  _deathParticle: {fileID: 4404536314446115546, guid: 30d21d20f19ca364796b00bd593cfff5, type: 3}
   target: {fileID: 0}
   health: 25
   speed: 3
