@@ -2729,7 +2729,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 120.1
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -3454,6 +3454,7 @@ MonoBehaviour:
   requiredPower: 100
   currentPower: 0
   minEnemyPower: 10000
+  _increasePowerByMinute: 80
   _checkCooldown: 2
   _spawnRadius: {x: 10, y: 30}
   _frontAngle: 180
@@ -5233,7 +5234,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 120.1
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000

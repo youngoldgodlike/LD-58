@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour {
     public float requiredPower = 100;
     public float currentPower = 0;
     public float minEnemyPower = 10000;
+    [SerializeField] float _increasePowerByMinute = 80;
     [SerializeField] float _checkCooldown = 2f;
     [SerializeField] Vector2 _spawnRadius = new(15, 30);
     [SerializeField] float _frontAngle = 180f;
@@ -63,7 +64,8 @@ public class Spawner : MonoBehaviour {
     IEnumerator Procces() {
         while (true) {
             if (_isActive == false) yield return _waitActivate;
-            
+
+            requiredPower += _increasePowerByMinute * Time.deltaTime;
             if (currentPower >= requiredPower) {
                 yield return _wait;
                 continue;
