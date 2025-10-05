@@ -12,6 +12,7 @@ namespace Main.Scripts
         [SerializeField] private float _gravity = -9.81f;
         [SerializeField] private float _jumpHeight = 2f;
         [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private Terminal _terminal;
 
         private CinemachineCamera _cinemachineCamera;
         private CharacterController _characterMoveController;
@@ -20,8 +21,9 @@ namespace Main.Scripts
         private float _xRotation = 0f;
         private float _verticalVelocity;
         private DesktopInput _input;
+        private InteractbleSystem _interactbleSystem;
 
-        private bool _isActive;
+        [SerializeField] private bool _isActive;
 
         private Coroutine _TurnActiveRoutine;
 
@@ -33,6 +35,9 @@ namespace Main.Scripts
             _input = new DesktopInput();
             _cinemachineCamera=  _cameraTransform.GetComponent<CinemachineCamera>();
             
+            _interactbleSystem = GetComponent<InteractbleSystem>();
+            _interactbleSystem .Initialize(_input);
+            _terminal.Initialize(_input);
             Enable();
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -54,8 +59,8 @@ namespace Main.Scripts
                 StopCoroutine(_TurnActiveRoutine);
             
             _isActive = false;
-        } 
-    
+        }
+
         private void Update()
         {
             if (!_isActive) return;
@@ -65,21 +70,24 @@ namespace Main.Scripts
             HandleMovement();
         }
 
+        private void LateUpdate()
+        {
+            if (!_isActive) return;       
+            HandleMouseLook();
+        }
+
         public void TurnOffCameraPriority()
         {
             _cinemachineCamera.Priority = -10;
+            Disable();
         }
-        
+
         public void TurnOnCameraPriority()
         {
             _cinemachineCamera.Priority = 10;
+            Enable(0.7f);
         }
-        
 
-        private void LateUpdate()
-        {
-            HandleMouseLook();
-        }
 
         private void HandleGroundCheck()
         {
@@ -132,41 +140,5 @@ namespace Main.Scripts
         }
     }
 
-    public class DesktopInput
-    {
-        public Vector2 Move => GetMove();
-        public Vector2 Look => GetLook();
-        public bool Jump => GetJump();
-
-        private readonly InputSystem_Actions _input;
-        private bool _isActive;
-
-        public DesktopInput()
-        {
-            _input = new InputSystem_Actions();
-            _input.Enable();
-            Enable();
-        }
-        
-        public void Enable() => _isActive = true;
-        public void Disable() => _isActive = false;
-
-        private Vector2 GetMove()
-        {
-            if (!_isActive) return Vector2.zero;
-            return _input.Player.Move.ReadValue<Vector2>();
-        }
-        
-        private Vector2 GetLook()
-        {
-            if (!_isActive) return Vector2.zero;
-            return _input.Player.Look.ReadValue<Vector2>();
-        }
-
-        private bool GetJump()
-        {
-            if (!_isActive) return false;
-            return _input.Player.Jump.triggered;
-        }
-    }
+    
 }
