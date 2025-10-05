@@ -6,12 +6,14 @@ using UnityEngine.AI;
 using UnityEngine.Profiling;
 
 public class Enemy : MonoBehaviour {
+    [SerializeField] Animator _animator;
     [SerializeField] NavMeshAgent _agent;
     [SerializeField] float _radius = 0.5f;
     [SerializeField] float _height = 1f;
     [SerializeField] MeshRenderer _meshRenderer;
     [SerializeField] SkinnedMeshRenderer _skinned;
     [SerializeField] Material _hitMat;
+    [SerializeField] GameObject _deathParticle;
 
     public Transform target;
     public float health;
@@ -35,7 +37,10 @@ public class Enemy : MonoBehaviour {
         if(_meshRenderer) Tween.CompleteAll(_meshRenderer.material);
         if (_skinned) Tween.CompleteAll(_skinned.material);
         _agent.isStopped = true;
-        Tween.PositionY(transform, -_height, 0, 1f).OnComplete(this, enemy => enemy._agent.isStopped = false);
+        Tween.PositionY(transform, -_height, 0, 1f).OnComplete(this, enemy => {
+            // _animator.SetTrigger("Walk");
+            enemy._agent.isStopped = false;
+        });
     }
 
     public void SetActive(bool value) {
@@ -81,6 +86,8 @@ public class Enemy : MonoBehaviour {
     
     [ContextMenu(nameof(Kill))]
     void Kill() {
+        // _animator.SetTrigger("Death");
+        Instantiate(_deathParticle).transform.position = transform.position;
         OnDie.Invoke(this);
     }
     
