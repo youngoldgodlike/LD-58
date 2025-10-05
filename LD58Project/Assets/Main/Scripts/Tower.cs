@@ -138,22 +138,18 @@ namespace Main.Scripts
 
         public void IncraseLaserSpeed()
         {
-            throw new NotImplementedException();
         }
 
         public void IncraseFireBall_Damage()
         {
-            throw new NotImplementedException();
         }
 
         public void IncraseFireBall_Radius()
         {
-            throw new NotImplementedException();
         }
 
         public void IncraseFireBall_Count()
         {
-            throw new NotImplementedException();
         }
     }
 }

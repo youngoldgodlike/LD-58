@@ -13,6 +13,7 @@ namespace Main.Scripts
         [SerializeField] private float _jumpHeight = 2f;
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Terminal _terminal;
+        [SerializeField] private GameObject _hud;
 
         private CinemachineCamera _cinemachineCamera;
         private CharacterController _characterMoveController;
@@ -26,7 +27,6 @@ namespace Main.Scripts
         [SerializeField] private bool _isActive;
 
         private Coroutine _TurnActiveRoutine;
-
         public Vector3 position => transform.position;
 
         private void Awake()
@@ -37,7 +37,7 @@ namespace Main.Scripts
             
             _interactbleSystem = GetComponent<InteractbleSystem>();
             _interactbleSystem .Initialize(_input);
-            _terminal?.Initialize(_input);
+            _terminal.Initialize(_input);
             Enable();
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -76,16 +76,18 @@ namespace Main.Scripts
             HandleMouseLook();
         }
 
+        public void TurnOnCameraPriority()
+        {
+            _hud.SetActive(true);
+            _cinemachineCamera.Priority = 10;
+            Enable(0.7f);
+        }
+
         public void TurnOffCameraPriority()
         {
             _cinemachineCamera.Priority = -10;
+            _hud.SetActive(false);
             Disable();
-        }
-
-        public void TurnOnCameraPriority()
-        {
-            _cinemachineCamera.Priority = 10;
-            Enable(0.7f);
         }
 
 
@@ -142,3 +144,5 @@ namespace Main.Scripts
 
     
 }
+
+

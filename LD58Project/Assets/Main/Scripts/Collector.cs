@@ -1,29 +1,40 @@
 ﻿using System.Collections;
+using Main.Scripts;
 using PrimeTween;
 using UnityEngine;
 public class Collector : MonoBehaviour {
     [SerializeField] Transform _takePoint;
     [SerializeField] float sosalTimeForOne = 0.3f;
+    [SerializeField] private Terminal _terminal;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _collectClip;
+    
     // MoneyStorage;
-    Bagy _bagy;
+    [ SerializeField] Bagy _bagy;
+    [SerializeField] private TowerZek _tower;
 
     Coroutine _coroutine;
 
     void OnTriggerEnter(Collider other) {
-        Debug.Log(other.name, other.transform);
-        _bagy = other.GetComponent<Bagy>();
         _coroutine = StartCoroutine(TakingItemsProcess());
     }
     void OnTriggerExit(Collider other) {
-        StopCoroutine(_coroutine);
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
     }
     IEnumerator TakingItemsProcess() {
         while (_bagy.treasures.Count > 0) {
             var treasure = _bagy.Take();
+            yield return null;
             Tween.Position(treasure.transform, GetAroundPos(), _takePoint.position, sosalTimeForOne);
             Tween.LocalRotation(treasure.transform, -treasure.transform.forward, sosalTimeForOne);
             yield return Tween.Scale(treasure.transform, 0, sosalTimeForOne);
-
+            
+            if (treasure.isOil) _tower.AddOil();
+            else _terminal.AddMoney(treasure.cost);
+           
+            
+            _audioSource.PlayOneShot(_collectClip);
             Destroy(treasure.gameObject);
             
             yield return null;

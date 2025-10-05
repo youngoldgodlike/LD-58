@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Main.Configs;
 using PrimeTween;
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-
 
 namespace Main.Scripts
 {
@@ -21,9 +21,11 @@ namespace Main.Scripts
         [SerializeField] private TowerZek _tower;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _enterClip;
+        [SerializeField] private AudioClip _exitClip;
         [SerializeField] private UpdateViewConfig _config;
         [SerializeField] private List<UpdateView> _updateViews;
         [SerializeField] private Button _closebutton;
+        [SerializeField] private TMP_Text _moneyText;
         private InteractbleSystem _interactbleSystem;
         private DesktopInput _input;
         private Dictionary<string, Action> _updates;
@@ -35,6 +37,7 @@ namespace Main.Scripts
         
         private bool _isOpen;
         private int _freePoints;
+        private int _money;
 
         public string Id => "Terminal";
 
@@ -47,24 +50,82 @@ namespace Main.Scripts
             
             _updates = new Dictionary<string, Action>
             {
-                {"laser_Damage", _tower.IncraseLaserDamage},
-                {"laser_Count", _tower.IncraseLaserCount},
-                {"laser_Speed", _tower.IncraseLaserSpeed},
-                {"FireBall_Damage", _tower.IncraseFireBall_Damage},
-                {"FireBall_Radius", _tower.IncraseFireBall_Radius},
-                {"FireBall_Count", _tower.IncraseFireBall_Count},
+                {"laser_Damage", () =>
+                {
+                    Debug.Log("Есть контакт");
+                    if (_money < 50) return;
+                    _tower.IncraseLaserDamage();
+                    _money -= 50;
+                    UpdateMoneyUI();
+                    InitializeUpdateView();
+                    
+                }},
+                {"laser_Count", () =>
+                    {
+                        
+                        Debug.Log("Есть контакт");
+                        if (_money < 50) return;
+                        _tower.IncraseLaserCount();
+                        _money -= 50;
+                        UpdateMoneyUI();
+                        InitializeUpdateView();
+                    }
+                },
+                {"laser_Speed", () =>
+                    {
+                        
+                        Debug.Log("Есть контакт");
+                        if (_money < 50) return;
+                        _tower.IncraseLaserSpeed();
+                        _money -= 50;
+                        UpdateMoneyUI();
+                        InitializeUpdateView();
+                    }
+                },
+                {"FireBall_Damage",() =>
+                    {
+                        
+                        Debug.Log("Есть контакт");
+                        if (_money < 50) return;
+                        _tower.IncraseFireBall_Damage();
+                        _money -= 50;
+                        UpdateMoneyUI(); 
+                        InitializeUpdateView();
+                    }
+                },
+                {"FireBall_Radius",() =>
+                    {
+                        
+                        Debug.Log("Есть контакт");
+                        if (_money < 50) return;                        
+                        _tower.IncraseFireBall_Radius();
+                        _money -= 50;
+                        UpdateMoneyUI();
+                        InitializeUpdateView();
+                    }
+                },
+                {"FireBall_Count", () =>
+                    {
+                        
+                        Debug.Log("Есть контакт");
+                        if (_money < 50) return;
+                        
+                        _tower.IncraseFireBall_Count();
+                        _money -= 50;
+                        UpdateMoneyUI();
+                        InitializeUpdateView();
+                    }
+                },
             };
             
+            UpdateMoneyUI();
             InitializeUpdateView();
         }
 
         private void Update()
         {
-            // Обработка закрытия терминала
             if (_isOpen && _input != null && _input.IsInteract)
-            {
                 Close();
-            }
         }
 
         public void EnableOutline()
@@ -97,6 +158,11 @@ namespace Main.Scripts
             }
         }
 
+        private void UpdateMoneyUI()
+        {
+            _moneyText.text = _money.ToString();
+        }
+
         public void Interact()
         {
             if (!_isOpen)
@@ -113,6 +179,11 @@ namespace Main.Scripts
             StartCoroutine(TurnOnRoutine());
         }
 
+        public void AddMoney(int money)
+        {
+            _money += money;
+            _moneyText.text = _money.ToString();
+        }
 
         private IEnumerator TurnOnRoutine()
         {
@@ -138,6 +209,7 @@ namespace Main.Scripts
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             
+            _audioSource.PlayOneShot(_exitClip);
             Tween.Scale(_canvas.transform, 0, 0.6f);
             _player.TurnOnCameraPriority();
             _tower.StartAttack();
@@ -152,3 +224,6 @@ namespace Main.Scripts
         }
     }
 }
+
+
+

@@ -14,6 +14,7 @@ namespace Main.Configs
     {
         public string id;
         public string Description;
+        public int cost;
         public Sprite Sprite;
     }
 }

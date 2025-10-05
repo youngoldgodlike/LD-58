@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Main.Scripts;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class TowerZek : MonoBehaviour
@@ -10,6 +11,10 @@ public class TowerZek : MonoBehaviour
 
     [SerializeField] private Spawner _spawner;
 
+    [Header("OIL")] public Image _oilFill;
+    public float _currentOil;
+    public float _maxOil = 25f;
+    
     [Header("Stats")]
     [SerializeField] float _laserDmg = 50;
     [SerializeField] float _laserSpeed = 9f;
@@ -31,9 +36,11 @@ public class TowerZek : MonoBehaviour
     [SerializeField] float _maxRadDelta = 1.8f;
 
     private Coroutine _laserRoutine;
+    private Coroutine _oilRoutine;
     WaitWhile _waitPause;
     CustomWait _waitFireballCD;
     bool _isPaused;
+    
     float fireballCD() => _fireballsCooldown / _fireballsCount;
         
     private void Start() {
@@ -46,6 +53,8 @@ public class TowerZek : MonoBehaviour
         _lazers.Add(lazer);
         _laserRoutine = StartCoroutine(LaserRoutine(lazer.transform));
         StartCoroutine(RotateEyeRoutine());
+
+        _oilRoutine = StartCoroutine(OilHandle());
     }
 
     private IEnumerator RotateEyeRoutine()
@@ -53,6 +62,35 @@ public class TowerZek : MonoBehaviour
         while (true)
         {
             _projectileSpawner.Rotate(Vector3.forward * (50 * Time.deltaTime));
+            yield return null;
+        }
+    }
+
+
+    public void AddOil()
+    {
+        _currentOil = Mathf.Clamp(_currentOil + 2, 0, _maxOil);
+
+        if (_oilRoutine == null)
+            _oilRoutine = StartCoroutine(OilHandle());
+    }
+
+    IEnumerator OilHandle()
+    {
+        while (true)
+        {
+            if(_currentOil <= 0)
+            {
+                StopAttack();
+                yield return null;
+                continue;
+            };
+            
+            
+            _currentOil -= Time.deltaTime;
+
+            float value = _currentOil / _maxOil;
+            _oilFill.fillAmount = value;
             yield return null;
         }
     }

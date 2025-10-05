@@ -1,7 +1,8 @@
 using UnityEngine;
 
 public class Treasure : MonoBehaviour {
-    public float cost;
-    
-    
+    public int cost;
+    public bool isOil;
+    public bool isTaken;
+
 }
