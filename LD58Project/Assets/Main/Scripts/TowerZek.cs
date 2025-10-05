@@ -107,6 +107,8 @@ public class TowerZek : MonoBehaviour
             var randomIndex = Random.Range(0, _spawner._spawnedEnemies.Count);
 
             FireBall fireBall = Instantiate(_fireballPrefab);
+            fireBall._damage = _fireballDamage;
+            fireBall._exlposionRadius = _fireballRadius;
             fireBall.transform.position = _projectileSpawner.transform.position;
             fireBall.Attack(_spawner._spawnedEnemies[randomIndex].transform);
 
