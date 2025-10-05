@@ -1,17 +1,18 @@
 ﻿using System.Collections;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Main.Scripts
 {
-    public class FireBall : MonoBehaviour
-    {
+    public class FireBall : MonoBehaviour {
+        [SerializeField] float _startRadDelta;
+        [SerializeField] float _radDeltaPerSec = 1f;
         [SerializeField] private float _speed = 10;
-        [SerializeField] private float _arcHeight = 5f;
-        [SerializeField] private float _damage = 10;
-        [SerializeField] private float _exlposionRadius = 5;
+            
+        [SerializeField] public float _damage = 10;
+        [SerializeField] public float _exlposionRadius = 5;
         [SerializeField] private GameObject _explosionPrefab;
         [SerializeField] private Transform _outline;
-        [SerializeField] private AnimationCurve _arcCurve;
         [SerializeField] private LayerMask _ememyLayer;
         
         public void Attack(Transform target)
@@ -19,42 +20,24 @@ namespace Main.Scripts
             StartCoroutine(FlyToTargetCoroutine(target));
         }
         
-        private IEnumerator FlyToTargetCoroutine(Transform target)
-        {
-            Vector3 startPos = transform.position;
+        IEnumerator FlyToTargetCoroutine(Transform target) {
             Vector3 targetPos = target.position;
-    
-            // Рассчитываем приблизительную длину дуги
-            float horizontalDistance = Vector3.Distance(
-                new Vector3(startPos.x, 0, startPos.z), 
-                new Vector3(targetPos.x, 0, targetPos.z)
-            );
-    
-            // Примерная длина дуги = горизонталь + вертикальное смещение
-            float arcLength = horizontalDistance + _arcHeight * 0.5f; // Упрощённая оценка
-    
-            // Время полёта = длина / скорость
-            float flightDuration = arcLength / _speed;
-    
-            float elapsedTime = 0f;
-    
-            while (elapsedTime < flightDuration)
-            {
-                elapsedTime += Time.deltaTime;
-                float t = elapsedTime / flightDuration;
-        
-                Vector3 currentPosXZ = Vector3.Lerp(startPos, targetPos, t);
-                float baseY = Mathf.Lerp(startPos.y, targetPos.y, t);
-                float arcOffset = _arcCurve.Evaluate(t) * _arcHeight;
-        
-                transform.position = new Vector3(currentPosXZ.x, baseY + arcOffset, currentPosXZ.z);
-        
+            Vector3 maPos = transform.position;
+            Vector3 flyDirection = Vector3.up;
+            float currentRadDelta = _startRadDelta;
+            
+            while ((targetPos - maPos).sqrMagnitude > 1f) {
+                Vector3 toTargetDir = targetPos - maPos;
+                flyDirection = Vector3.RotateTowards(flyDirection, toTargetDir, currentRadDelta * Time.deltaTime, 0f);
+                transform.position += flyDirection * (_speed * Time.deltaTime);
+
                 yield return null;
+                targetPos = target == null ? targetPos : target.position;
+                maPos = transform.position;
+                currentRadDelta += Time.deltaTime * _radDeltaPerSec;
             }
-            // Убедиться, что дошли до финала
-            transform.position = targetPos;
-    
-           Explode();
+            
+            Explode();
         }
 
         private void Explode()

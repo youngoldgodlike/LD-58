@@ -18,7 +18,7 @@ namespace Main.Scripts
         [SerializeField] private Outline _outline;
         [SerializeField] private Player _player;
         [SerializeField] private CinemachineCamera _camera;
-        [SerializeField] private Tower _tower;
+        [SerializeField] private TowerZek _tower;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _enterClip;
         [SerializeField] private UpdateViewConfig _config;
@@ -41,7 +41,7 @@ namespace Main.Scripts
         private void Awake()
         {
             _interactbleSystem = FindObjectOfType<InteractbleSystem>();
-            _tower = FindObjectOfType<Tower>();
+            _tower = FindObjectOfType<TowerZek>();
             
             _closebutton.onClick.AddListener(Close);
             

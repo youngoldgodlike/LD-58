@@ -29,7 +29,6 @@ public class Spawner : MonoBehaviour {
     
     [ContextMenu(nameof(Initialize))]
     public void Initialize() {
-        Debug.Log("Hello");
         _wait = new(_checkCooldown);
         _waitActivate = new(() => _isActive == false);
         sqrFarDis = _farDistance * _farDistance;
@@ -86,8 +85,8 @@ public class Spawner : MonoBehaviour {
             foreach (Enemy toSpawn in enemies) {
                 var enemy = Instantiate(toSpawn);
                 _spawnedEnemies.Add(enemy);
-                // enemy.transform.position = GetSpawnPosition();
-                enemy.transform.position = GetSpawnInFrontOfPlayer();
+                enemy.transform.position = GetSpawnPosition();
+                // enemy.transform.position = GetSpawnInFrontOfPlayer();
                 enemy.Init();
                 enemy.OnDie += KillEnemy;
                 enemy.target = _player.transform;
@@ -136,8 +135,8 @@ public class Spawner : MonoBehaviour {
         float angle = Random.Range(0f, 360f);
         Vector3 direction = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
         Vector3 targetSpawn = (_player.position + direction * Random.Range(_spawnRadius.x, _spawnRadius.y));
-        Debug.DrawRay(targetSpawn, Vector3.up, Color.red,10f);
-        if (Physics.RaycastNonAlloc(targetSpawn.WithY(30), Vector3.down, hits) > 0) {
+        // Debug.DrawRay(targetSpawn, Vector3.up, Color.red,10f);
+        if (Physics.RaycastNonAlloc(targetSpawn.WithY(30), Vector3.down, hits, 50f, LayerMask.GetMask(new []{"Field"})) > 0) {
             return hits[0].point;
         } else {
             Debug.LogError($"No ground founded??");
@@ -146,19 +145,22 @@ public class Spawner : MonoBehaviour {
     }
     Vector3 GetSpawnInFrontOfPlayer() {
         float angle = Random.Range(0f, _frontAngle);
-        Vector3 direction = Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(-90f, Vector3.up)
-            * (_player._moveDirection == Vector2.zero ? -_player.transform.right : _player._moveDirection));
+        
+        Vector3 moveDir = _player._moveDirection == Vector2.zero ? _player.transform.forward 
+            : _player.transform.TransformDirection(new(_player._moveDirection.x, 0, _player._moveDirection.y));
+        Debug.DrawRay(_player.position, moveDir * 5f, Color.blue, 1f);
+        
+        Vector3 direction = Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(-90f, Vector3.up) * moveDir);
         Vector3 targetSpawn = (_player.position + direction * Random.Range(_spawnRadius.x, _spawnRadius.y));
         Debug.DrawRay(targetSpawn, Vector3.up, Color.red,10f);
-        if (Physics.RaycastNonAlloc(targetSpawn.WithY(30), Vector3.down, hits) > 0) {
+        
+        if (Physics.RaycastNonAlloc(targetSpawn.WithY(3), Vector3.down, hits) > 0) {
+            Debug.DrawRay(hits[0].point, Vector3.up * 5f, Color.green, 1f);
             return hits[0].point;
         } else {
             Debug.LogError($"No ground founded??");
             return targetSpawn;
         }
-    }
-    static bool op_Equality(Vector3 playerMoveDirection, Vector2 zero) {
-        return Mathf.Approximately(playerMoveDirection.x, zero.x) && Mathf.Approximately(playerMoveDirection.y, zero.y);
     }
 
     public void SetActive(bool value) {
