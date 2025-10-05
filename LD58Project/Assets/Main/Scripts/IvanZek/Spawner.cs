@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] Player _player;
     [SerializeField] List<Enemy> _enemiesPrefab;
+    [SerializeField] GameObject _meatPrefab;
 
     [Header("Params")]
     public float requiredPower = 100;
@@ -136,7 +137,7 @@ public class Spawner : MonoBehaviour {
         Vector3 direction = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
         Vector3 targetSpawn = (_player.position + direction * Random.Range(_spawnRadius.x, _spawnRadius.y));
         // Debug.DrawRay(targetSpawn, Vector3.up, Color.red,10f);
-        if (Physics.RaycastNonAlloc(targetSpawn.WithY(30), Vector3.down, hits, 50f, LayerMask.GetMask(new []{"Field"})) > 0) {
+        if (Physics.RaycastNonAlloc(targetSpawn.WithY(5), Vector3.down, hits, 50f, LayerMask.GetMask(new []{"Field"})) > 0) {
             return hits[0].point;
         } else {
             Debug.LogError($"No ground founded??");
@@ -187,7 +188,16 @@ public class Spawner : MonoBehaviour {
         currentPower -= enemy.power;
         _spawnedEnemies.Remove(enemy);
         Tween.StopAll(enemy.transform);
+        CreateMeat(enemy.transform.position);
         Destroy(enemy.gameObject);
+    }
+    void CreateMeat(Vector3 spawnPos) {
+        var meat = Instantiate(_meatPrefab);
+        meat.transform.position = spawnPos + Vector3.up * 1f;
+        
+        // Tween.PositionX(meat.transform, meat.transform.position.x + Random.Range(-1, 1f), 1.5f, Ease.OutQuad);
+        // Tween.PositionY(meat.transform, meat.transform.position.y + 1, 1.5f, Ease.OutQuad);
+        // Tween.PositionZ(meat.transform, meat.transform.position.z + Random.Range(-1, 1f), 1.5f, Ease.OutQuad);
     }
     public Enemy GetRandomEnemy() {
         return _spawnedEnemies[Random.Range(0, _spawnedEnemies.Count)];

@@ -50,12 +50,13 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _agent: {fileID: 1174204396860062132}
   _radius: 0.5
-  _height: 3
+  _height: 3.84
   _meshRenderer: {fileID: 0}
   _skinned: {fileID: 995793043935465080}
   _hitMat: {fileID: 2100000, guid: 4aeb33837d2e9bc4a92f04ae04a7e386, type: 2}
   _deathParticle: {fileID: 4404536314446115546, guid: 30d21d20f19ca364796b00bd593cfff5, type: 3}
   target: {fileID: 0}
+  damage: 10
   health: 60
   speed: 2
   power: 16
@@ -94,7 +95,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 895
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0

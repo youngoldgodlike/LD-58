@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using PrimeTween;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -34,6 +35,8 @@ namespace Main.Scripts
         [SerializeField] private bool _isActive;
 
         private Coroutine _TurnActiveRoutine;
+        Tween _takeDmg;
+        
         public Vector3 position => transform.position;
 
         private void Awake()
@@ -44,7 +47,7 @@ namespace Main.Scripts
             
             _interactbleSystem = GetComponent<InteractbleSystem>();
             _interactbleSystem .Initialize(_input);
-            _terminal.Initialize(_input);
+            _terminal?.Initialize(_input);
             Enable();
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -71,6 +74,10 @@ namespace Main.Scripts
         [ContextMenu("DealDamage")]
         public void DealDamage()
         {
+            if (_takeDmg.isAlive)
+                return;
+
+            _takeDmg = Tween.Custom(0, 1, 1f, x => { });
             health -= 10;
 
             if (health < 0) health = 0;

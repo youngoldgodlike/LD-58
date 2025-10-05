@@ -101,9 +101,9 @@ public class TowerZek : MonoBehaviour
         var enemies = _spawner._spawnedEnemies;
         WaitWhile waitEnemy = new(() => enemies.Count == 0);
 
-        Vector3 curDirection = Vector3.one;
-        Vector3 curVelocity = Vector3.zero;
-        Vector3 currentGroundPos = Vector3.zero;
+        Vector3 curDirection = _projectileSpawner.forward;
+        Debug.DrawRay(_projectileSpawner.position, curDirection * 10f, Color.red, 2f);
+        Vector3 currentGroundPos = _projectileSpawner.forward * 100f;
         Vector3 targetPos;
 
         while (true) {

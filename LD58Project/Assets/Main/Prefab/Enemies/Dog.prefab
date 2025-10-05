@@ -56,6 +56,7 @@ MonoBehaviour:
   _hitMat: {fileID: 0}
   _deathParticle: {fileID: 4404536314446115546, guid: 30d21d20f19ca364796b00bd593cfff5, type: 3}
   target: {fileID: 0}
+  damage: 10
   health: 10
   speed: 4
   power: 15
@@ -94,7 +95,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 895
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0

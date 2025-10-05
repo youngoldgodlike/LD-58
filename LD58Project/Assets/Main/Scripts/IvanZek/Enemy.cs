@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Main.Scripts;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,6 +17,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField] GameObject _deathParticle;
 
     public Transform target;
+    public float damage = 10;
     public float health;
     public float speed;
     public int power;
@@ -44,7 +46,7 @@ public class Enemy : MonoBehaviour {
     }
 
     public void SetActive(bool value) {
-        _agent.isStopped = value;
+        _agent.speed = value ? speed : 0;
     }
     
     public void UpdateMe() {
@@ -69,13 +71,17 @@ public class Enemy : MonoBehaviour {
             Tween.MaterialColor(_meshRenderer.material, Color.red, _baseColor, 0.5f);
         }
         if (_skinned) {
-            if (_hitRoutine == null) _hitRoutine = StartCoroutine(HitRoutine());
+            // if (_hitRoutine == null) _hitRoutine = StartCoroutine(HitRoutine());
+            if(Tween.GetTweensCount(_skinned.material) > 0) return;
+            Tween.MaterialColor(_skinned.material, Color.red, _baseColor, 0.5f);
+
         }
     }
 
     WaitForSeconds _wait = new(0.3f);
     IEnumerator HitRoutine() {
         _skinned.material = _hitMat;
+        
 
         yield return _wait;
 
@@ -93,5 +99,6 @@ public class Enemy : MonoBehaviour {
     
     void OnTriggerEnter(Collider other) {
         // todo Deal damage to player
+        other.GetComponent<Player>()?.DealDamage();
     }
 }

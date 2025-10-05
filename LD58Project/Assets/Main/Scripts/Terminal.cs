@@ -29,6 +29,7 @@ namespace Main.Scripts
         private InteractbleSystem _interactbleSystem;
         private DesktopInput _input;
         private Dictionary<string, Action> _updates;
+        Spawner _spawner;
         
         
 
@@ -45,6 +46,7 @@ namespace Main.Scripts
         {
             _interactbleSystem = FindObjectOfType<InteractbleSystem>();
             _tower = FindObjectOfType<TowerZek>();
+            _spawner = FindObjectOfType<Spawner>();
             
             _closebutton.onClick.AddListener(Close);
             
@@ -191,6 +193,7 @@ namespace Main.Scripts
             _player.TurnOffCameraPriority();
             Tween.Scale(_canvas.transform, _initialScale, 0.6f);
             _interactbleSystem.SetActive(false);
+            _spawner.SetActive(false);
             _camera.Priority = 10;
             _tower.StopAttack();
 
@@ -216,6 +219,7 @@ namespace Main.Scripts
             _camera.Priority = -10;
             _isOpen = false;
             _interactbleSystem.SetActive(true);
+            _spawner.SetActive(true);
         }
 
         public void Initialize(DesktopInput input)
