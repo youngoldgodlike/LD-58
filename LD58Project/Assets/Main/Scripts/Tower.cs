@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,16 +10,14 @@ namespace Main.Scripts
         [SerializeField] private Transform _projectileSpawner;
         [SerializeField] private Spawner _spawner;
         [SerializeField] private Player _player;
-
-
+        
         [Header("Fireballs")]
         [SerializeField] private FireBall _fireballPrefab;
 
         [SerializeField] private float _fireballsCooldown = 5f;
         [SerializeField] private float _fireballsCastDuration = 1f;
         [SerializeField] private int _fireballsCount = 2;
-
-
+        
         [Header("Laser")]
         [SerializeField] private LineRenderer _laserLineRenderer;
 
@@ -36,6 +35,25 @@ namespace Main.Scripts
             _laserLineRenderer.positionCount = 2;
             
             StartCoroutine(RotateEyeRoutine());
+            
+            StartAttack();
+        }
+
+        public void StopAttack()
+        {
+            if (_delayBeforeStartAttack != null)
+                StopCoroutine(_delayBeforeStartAttack);
+            
+            if (_fireBallRoutine != null)
+                StopCoroutine(_fireBallRoutine);
+            
+            if (_laserRoutine != null)
+                StopCoroutine(_laserRoutine);
+        }
+
+        public void StartAttack()
+        {
+            _delayBeforeStartAttack = StartCoroutine(DelayBeforeAttackRoutine());
         }
 
         private IEnumerator DelayBeforeAttackRoutine()
@@ -45,21 +63,7 @@ namespace Main.Scripts
             _fireBallRoutine = StartCoroutine(FireBallRoutine());
             _laserRoutine = StartCoroutine(LaserRoutine());
         }
-        
-        public void StartAttack()
-        {
-            _delayBeforeStartAttack = StartCoroutine(DelayBeforeAttackRoutine());
-        }
 
-        public void StopAttack()
-        {
-            if (_delayBeforeStartAttack != null)
-                StopCoroutine(_delayBeforeStartAttack);
-            
-            StopCoroutine(_fireBallRoutine);
-            StopCoroutine(_laserRoutine);
-        }
-        
         private IEnumerator RotateEyeRoutine()
         {
             while (true)
@@ -120,6 +124,36 @@ namespace Main.Scripts
 
                 yield return new WaitForSeconds(_fireballsCooldown);
             }
+        }
+
+        public void IncraseLaserDamage()
+        {
+            
+        }
+
+        public void IncraseLaserCount()
+        {
+            
+        }
+
+        public void IncraseLaserSpeed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IncraseFireBall_Damage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IncraseFireBall_Radius()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IncraseFireBall_Count()
+        {
+            throw new NotImplementedException();
         }
     }
 }
