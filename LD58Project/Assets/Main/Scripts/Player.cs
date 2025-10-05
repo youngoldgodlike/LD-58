@@ -126,7 +126,6 @@ namespace Main.Scripts
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-
         private void HandleGroundCheck()
         {
             // Более надёжная проверка земли через встроенный метод + небольшое прижатие

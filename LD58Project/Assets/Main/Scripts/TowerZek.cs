@@ -67,10 +67,9 @@ public class TowerZek : MonoBehaviour
         }
     }
 
-
     public void AddOil()
     {
-        _currentOil = Mathf.Clamp(_currentOil + 2, 0, _maxOil);
+        _currentOil = Mathf.Clamp(_currentOil + 5, 0, _maxOil);
 
         if (_oilRoutine == null)
             _oilRoutine = StartCoroutine(OilHandle());
@@ -91,7 +90,7 @@ public class TowerZek : MonoBehaviour
             _currentOil -= Time.deltaTime;
 
             float value = _currentOil / _maxOil;
-            // _oilFill.fillAmount = value;
+             _oilFill.fillAmount = value;
             yield return null;
         }
     }

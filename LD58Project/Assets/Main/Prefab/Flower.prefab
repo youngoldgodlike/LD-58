@@ -137,15 +137,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 77acb7fa06b23ec4eb6c0c7f341b9461, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.9982498
+      value: -1.4784701
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77acb7fa06b23ec4eb6c0c7f341b9461, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.932
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77acb7fa06b23ec4eb6c0c7f341b9461, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.64773
+      value: 22.395409
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77acb7fa06b23ec4eb6c0c7f341b9461, type: 3}
       propertyPath: m_LocalRotation.w
@@ -213,6 +213,8 @@ MonoBehaviour:
   cost: 50
   isOil: 0
   isTaken: 0
+  rotationAngle: 45
+  interval: 0.5
 --- !u!65 &3051232527111218360
 BoxCollider:
   m_ObjectHideFlags: 0
