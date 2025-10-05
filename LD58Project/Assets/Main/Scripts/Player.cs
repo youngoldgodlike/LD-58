@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Main.Scripts
 {
@@ -14,6 +17,8 @@ namespace Main.Scripts
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Terminal _terminal;
         [SerializeField] private GameObject _hud;
+        [SerializeField] private GameObject _loseScreen;
+        [SerializeField] private Image _hpFill;
 
         private CinemachineCamera _cinemachineCamera;
         private CharacterController _characterMoveController;
@@ -24,6 +29,8 @@ namespace Main.Scripts
         private DesktopInput _input;
         private InteractbleSystem _interactbleSystem;
 
+        public int health = 100;
+        
         [SerializeField] private bool _isActive;
 
         private Coroutine _TurnActiveRoutine;
@@ -61,6 +68,23 @@ namespace Main.Scripts
             _isActive = false;
         }
 
+        [ContextMenu("DealDamage")]
+        public void DealDamage()
+        {
+            health -= 10;
+
+            if (health < 0) health = 0;
+
+            float value = (float) health / 100;
+            _hpFill.fillAmount = value;
+            
+            if (health > 0) return;
+            
+            _loseScreen.gameObject.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         private void Update()
         {
             if (!_isActive) return;
@@ -88,6 +112,11 @@ namespace Main.Scripts
             _cinemachineCamera.Priority = -10;
             _hud.SetActive(false);
             Disable();
+        }
+
+        public void TryAgain()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
 

@@ -44,8 +44,9 @@ namespace Main.Scripts
         {
             var explosion = Instantiate(_explosionPrefab);
             explosion.transform.position = transform.position;
-            
-            var collision=  Physics.OverlapSphere(transform.position, _exlposionRadius);
+            explosion.transform.localScale = Vector3.one * _exlposionRadius;
+
+            var collision = Physics.OverlapSphere(transform.position, _exlposionRadius);
             GetDamage(collision);
             
             Destroy(gameObject);
