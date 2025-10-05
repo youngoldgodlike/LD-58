@@ -12,7 +12,7 @@ public class TowerZek : MonoBehaviour
     [SerializeField] private Spawner _spawner;
 
     [Header("OIL")] public Image _oilFill;
-    public float _currentOil;
+    [SerializeField] public float _currentOil;
     public float _maxOil = 25f;
     
     [Header("Stats")]
@@ -40,7 +40,7 @@ public class TowerZek : MonoBehaviour
     private Coroutine _oilRoutine;
     WaitWhile _waitPause;
     CustomWait _waitFireballCD;
-    bool _isPaused;
+    [SerializeField] bool _isPaused;
     
     float fireballCD() => _fireballsCooldown / _fireballsCount;
         
@@ -91,7 +91,7 @@ public class TowerZek : MonoBehaviour
             _currentOil -= Time.deltaTime;
 
             float value = _currentOil / _maxOil;
-            _oilFill.fillAmount = value;
+            // _oilFill.fillAmount = value;
             yield return null;
         }
     }
@@ -145,6 +145,8 @@ public class TowerZek : MonoBehaviour
 
     IEnumerator FireballProcess() {
         while (true) {
+            yield return _waitPause;
+            
             var randomIndex = Random.Range(0, _spawner._spawnedEnemies.Count);
 
             FireBall fireBall = Instantiate(_fireballPrefab);
