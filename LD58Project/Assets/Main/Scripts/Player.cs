@@ -37,7 +37,7 @@ namespace Main.Scripts
             
             _interactbleSystem = GetComponent<InteractbleSystem>();
             _interactbleSystem .Initialize(_input);
-            _terminal.Initialize(_input);
+            _terminal?.Initialize(_input);
             Enable();
             Cursor.lockState = CursorLockMode.Locked;
         }

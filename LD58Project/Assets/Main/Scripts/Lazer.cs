@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 public class Lazer : MonoBehaviour {
-    [SerializeField] float dmg = 10;
+    public float dmg = 10;
     
     void OnTriggerEnter(Collider other) {
         // if (other.gameObject.TryGetComponent(out Enemy enemy)) {
