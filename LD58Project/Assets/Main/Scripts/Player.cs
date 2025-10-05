@@ -16,7 +16,7 @@ namespace Main.Scripts
         private CinemachineCamera _cinemachineCamera;
         private CharacterController _characterMoveController;
         private bool _isGrounded;
-        private Vector2 _moveDirection;
+        public Vector2 _moveDirection;
         private float _xRotation = 0f;
         private float _verticalVelocity;
         private DesktopInput _input;
@@ -24,6 +24,8 @@ namespace Main.Scripts
         private bool _isActive;
 
         private Coroutine _TurnActiveRoutine;
+
+        public Vector3 position => transform.position;
 
         private void Awake()
         {

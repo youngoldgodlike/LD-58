@@ -1,14 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using Main.Scripts;
 using PrimeTween;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour {
     [Header("Settings")]
-    [SerializeField] Transform _player;
+    [SerializeField] Player _player;
     [SerializeField] List<Enemy> _enemiesPrefab;
 
     [Header("Params")]
@@ -16,8 +15,10 @@ public class Spawner : MonoBehaviour {
     public float currentPower = 0;
     public float minEnemyPower = 10000;
     [SerializeField] float _checkCooldown = 2f;
-    [SerializeField] Vector2 _spawnRadius = new(5, 10);
-    [SerializeField] float _spawnY = 0;
+    [SerializeField] Vector2 _spawnRadius = new(15, 30);
+    [SerializeField] float _frontAngle = 180f;
+    [SerializeField] float _farDistance = 30;
+    float sqrFarDis;
 
     [Header("Runtime")]
     public List<Enemy> _spawnedEnemies  = new(40);
@@ -31,6 +32,7 @@ public class Spawner : MonoBehaviour {
         Debug.Log("Hello");
         _wait = new(_checkCooldown);
         _waitActivate = new(() => _isActive == false);
+        sqrFarDis = _farDistance * _farDistance;
         
         foreach (Enemy enemy in _enemiesPrefab) {
             if (minEnemyPower > enemy.power) minEnemyPower = enemy.power;
@@ -43,6 +45,13 @@ public class Spawner : MonoBehaviour {
         }
         foreach (Enemy enemy in _spawnedEnemies) {
             enemy.UpdateMe();
+        }
+        Vector3 playerPos = _player.position;
+        foreach (Enemy enemy in _spawnedEnemies) {
+            if ((enemy.transform.position - playerPos).sqrMagnitude > sqrFarDis) {
+                enemy.transform.position = GetSpawnInFrontOfPlayer();
+                enemy.Init();
+            }
         }
     }
     void FixedUpdate() {
@@ -77,10 +86,13 @@ public class Spawner : MonoBehaviour {
             foreach (Enemy toSpawn in enemies) {
                 var enemy = Instantiate(toSpawn);
                 _spawnedEnemies.Add(enemy);
-                enemy.transform.position = GetSpawnPosition();
+                // enemy.transform.position = GetSpawnPosition();
+                enemy.transform.position = GetSpawnInFrontOfPlayer();
                 enemy.Init();
                 enemy.OnDie += KillEnemy;
-                enemy.target = _player;
+                enemy.target = _player.transform;
+
+                yield return null;
             }
             
             yield return _wait;
@@ -132,7 +144,23 @@ public class Spawner : MonoBehaviour {
             return targetSpawn;
         }
     }
-    
+    Vector3 GetSpawnInFrontOfPlayer() {
+        float angle = Random.Range(0f, _frontAngle);
+        Vector3 direction = Quaternion.AngleAxis(angle, Vector3.up) * (Quaternion.AngleAxis(-90f, Vector3.up)
+            * (_player._moveDirection == Vector2.zero ? -_player.transform.right : _player._moveDirection));
+        Vector3 targetSpawn = (_player.position + direction * Random.Range(_spawnRadius.x, _spawnRadius.y));
+        Debug.DrawRay(targetSpawn, Vector3.up, Color.red,10f);
+        if (Physics.RaycastNonAlloc(targetSpawn.WithY(30), Vector3.down, hits) > 0) {
+            return hits[0].point;
+        } else {
+            Debug.LogError($"No ground founded??");
+            return targetSpawn;
+        }
+    }
+    static bool op_Equality(Vector3 playerMoveDirection, Vector2 zero) {
+        return Mathf.Approximately(playerMoveDirection.x, zero.x) && Mathf.Approximately(playerMoveDirection.y, zero.y);
+    }
+
     public void SetActive(bool value) {
         _isActive = value;
         foreach (Enemy e in _spawnedEnemies) {

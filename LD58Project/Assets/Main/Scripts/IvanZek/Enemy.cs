@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,8 +9,9 @@ public class Enemy : MonoBehaviour {
     [SerializeField] NavMeshAgent _agent;
     [SerializeField] float _radius = 0.5f;
     [SerializeField] float _height = 1f;
-    [SerializeField] bool _hueto;
     [SerializeField] MeshRenderer _meshRenderer;
+    [SerializeField] SkinnedMeshRenderer _skinned;
+    [SerializeField] Material _hitMat;
 
     public Transform target;
     public float health;
@@ -18,15 +20,20 @@ public class Enemy : MonoBehaviour {
 
     public event Action<Enemy> OnDie = delegate { };
 
+    Material _baseMat;
     Color _baseColor;
+    Coroutine _hitRoutine;
     
     void Awake() {
-        _baseColor = _meshRenderer.material.color;
+        if (_skinned) _baseMat = _skinned.sharedMaterial;
+        if (_meshRenderer) _baseColor = _meshRenderer.material.color;
         _agent.speed = speed;
         _agent.updateRotation = false;
     }
 
     public void Init() {
+        if(_meshRenderer) Tween.CompleteAll(_meshRenderer.material);
+        if (_skinned) Tween.CompleteAll(_skinned.material);
         _agent.isStopped = true;
         Tween.PositionY(transform, -_height, 0, 1f).OnComplete(this, enemy => enemy._agent.isStopped = false);
     }
@@ -52,15 +59,30 @@ public class Enemy : MonoBehaviour {
         health = Mathf.Clamp(health - dmg, 0, health);
         if (health == 0) OnDie.Invoke(this);
 
-        if(Tween.GetTweensCount(_meshRenderer.material) > 0) return;
-        Tween.MaterialColor(_meshRenderer.material, Color.red, _baseColor, 0.5f);
+        if (_meshRenderer) {
+            if(Tween.GetTweensCount(_meshRenderer.material) > 0) return;
+            Tween.MaterialColor(_meshRenderer.material, Color.red, _baseColor, 0.5f);
+        }
+        if (_skinned) {
+            if (_hitRoutine == null) _hitRoutine = StartCoroutine(HitRoutine());
+        }
     }
 
+    WaitForSeconds _wait = new(0.3f);
+    IEnumerator HitRoutine() {
+        _skinned.material = _hitMat;
+
+        yield return _wait;
+
+        _skinned.material = _baseMat;
+        _hitRoutine = null;
+    }
+
+    
     [ContextMenu(nameof(Kill))]
     void Kill() {
         OnDie.Invoke(this);
     }
-    
     
     void OnTriggerEnter(Collider other) {
         // todo Deal damage to player
