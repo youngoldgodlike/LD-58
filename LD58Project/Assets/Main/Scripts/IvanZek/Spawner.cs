@@ -27,8 +27,6 @@ public class Spawner : MonoBehaviour {
     WaitWhile _waitActivate;
     bool _isActive = true;
     
-    
-    
     [ContextMenu(nameof(Initialize))]
     public void Initialize() {
         _wait = new(_checkCooldown);
