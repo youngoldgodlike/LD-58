@@ -1520,8 +1520,8 @@ MonoBehaviour:
   _projectileSpawner: {fileID: 215608094}
   _spawner: {fileID: 1214524025}
   _oilFill: {fileID: 640335916}
-  _currentOil: 25
-  _maxOil: 25
+  _currentOil: 120
+  _maxOil: 120
   _laserDmg: 50
   _laserSpeed: 9
   _fireballsCount: 2
