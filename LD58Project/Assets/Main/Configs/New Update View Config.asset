@@ -14,26 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Main.Configs.UpdateViewConfig
   ViewData:
   - id: laser_Damage
-    Description: Incrase laser damage
+    Description: Increase laser damage
     cost: 50
     Sprite: {fileID: 21300000, guid: a72a9b4e9ef732444a7a7eeb28d5d5ac, type: 3}
   - id: laser_Count
-    Description: Incrase laser count
+    Description: Increase laser count
     cost: 50
     Sprite: {fileID: 21300000, guid: a72a9b4e9ef732444a7a7eeb28d5d5ac, type: 3}
   - id: laser_Speed
-    Description: Incrase laser speed
+    Description: Increase laser speed
     cost: 50
     Sprite: {fileID: 21300000, guid: a72a9b4e9ef732444a7a7eeb28d5d5ac, type: 3}
   - id: FireBall_Damage
-    Description: Incrase fire ball speed
+    Description: Increase fire ball speed
     cost: 50
     Sprite: {fileID: 21300000, guid: 6fac7de0829d46e44bc176a28e166e31, type: 3}
   - id: FireBall_Radius
-    Description: Incrase fire ball explosion radius
+    Description: Increase fire ball explosion radius
     cost: 50
     Sprite: {fileID: 21300000, guid: 6fac7de0829d46e44bc176a28e166e31, type: 3}
-  - id: FireBall_Radius
-    Description: Incrase fire ball explosion radius
+  - id: FireBall_Count
+    Description: Increase fire ball count
     cost: 50
     Sprite: {fileID: 21300000, guid: 6fac7de0829d46e44bc176a28e166e31, type: 3}

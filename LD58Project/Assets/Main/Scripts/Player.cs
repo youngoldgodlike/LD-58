@@ -11,10 +11,14 @@ namespace Main.Scripts
 {
     public class Player : MonoBehaviour
     {
+        [Header("Parameters")]
         [SerializeField] private float _moveSpeed = 1.5f;
         [SerializeField] private float _mouseSensitivity = 2f;
         [SerializeField] private float _gravity = -9.81f;
         [SerializeField] private float _jumpHeight = 2f;
+        [SerializeField] private float _healthRegen = 60f;
+        
+        [Header("Dependencies")]
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Terminal _terminal;
         [SerializeField] private GameObject _hud;
@@ -30,32 +34,51 @@ namespace Main.Scripts
         private DesktopInput _input;
         private InteractbleSystem _interactbleSystem;
 
-        public int health = 100;
+        public int maxHealth = 100;
+        public float health = 100;
         
         [SerializeField] private bool _isActive;
 
         private Coroutine _TurnActiveRoutine;
         Tween _takeDmg;
+        float _healthDelay = 0f;
         
         public Vector3 position => transform.position;
 
-        private void Awake()
-        {
+        private void Awake() {
             _characterMoveController = GetComponent<CharacterController>(); ;
             _input = new DesktopInput();
             _cinemachineCamera=  _cameraTransform.GetComponent<CinemachineCamera>();
+            StartCoroutine(HealthRegeneration());
             
             _interactbleSystem = GetComponent<InteractbleSystem>();
             _interactbleSystem .Initialize(_input);
             _terminal?.Initialize(_input);
             Enable();
-            Cursor.lockState = CursorLockMode.Locked;
+            
+            // Cursor.lockState = CursorLockMode.Locked;
         }
 
         public void Enable(float delayBeforeEnable = 0)
         {
             _TurnActiveRoutine = StartCoroutine(EnableRoutine(delayBeforeEnable));
-        } 
+        }
+        private IEnumerator HealthRegeneration() {
+            while (true) {
+                if (_healthDelay > 0) {
+                    _healthDelay -= Time.deltaTime;
+                    yield return null;
+                    continue;
+                }
+
+                if (health == maxHealth) {
+                    yield return null;
+                    continue;
+                }
+                health = Mathf.Clamp(health + Time.deltaTime, 0, maxHealth);
+                yield return null;
+            }
+        }
 
         private IEnumerator EnableRoutine(float delayBeforeEnable)
         {
@@ -79,6 +102,7 @@ namespace Main.Scripts
 
             _takeDmg = Tween.Custom(0, 1, 1f, x => { });
             health -= 10;
+            _healthDelay = 5f;
 
             if (health < 0) health = 0;
 

@@ -147,16 +147,28 @@ namespace Main.Scripts
             InitializeUpdateView();
         }
 
-        private void InitializeUpdateView()
-        {
-            foreach (var view in _updateViews)
-            {
-               var randomValue = Random.Range(0, _updates.Count);
-               var randomUpdate = _config.ViewData[randomValue];
+        private void InitializeUpdateView() {
+            Debug.Log($"Initializng");
+            // Dictionary<string, Action> available = new(_updates);
+            Dictionary<string, UpdateViewData> values = new();
+            List<UpdateViewData> data = _config.ViewData.ToList();
+            foreach (UpdateViewData viewData in _config.ViewData) {
+                values.Add(viewData.id, viewData);
+            }
+            
+            foreach (var view in _updateViews) {
+                UpdateViewData randomValue = data[Random.Range(0, values.Count)];
+                values.Remove(randomValue.id);
+               // var randomUpdate = _config.ViewData[randomValue.id];
                
-               var value =  _updates.FirstOrDefault(x => x.Key == randomUpdate.id);
+               var value =  _updates.FirstOrDefault(x => x.Key == randomValue.id);
 
-               view.Initialize(randomUpdate.Sprite, randomUpdate.Description, value.Value);
+               view.Initialize(randomValue.Sprite, randomValue.Description, value.Value);
+
+               for (int i = data.Count -1; i >= 0; i--) {
+                   if(values.ContainsKey(data[i].id)) continue;
+                   data.RemoveAt(i);
+               }
             }
         }
 
