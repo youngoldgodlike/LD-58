@@ -194,10 +194,13 @@ public class Spawner : MonoBehaviour {
     void CreateMeat(Vector3 spawnPos) {
         var meat = Instantiate(_meatPrefab);
         meat.transform.position = spawnPos + Vector3.up * 1f;
-        
-        // Tween.PositionX(meat.transform, meat.transform.position.x + Random.Range(-1, 1f), 1.5f, Ease.OutQuad);
-        // Tween.PositionY(meat.transform, meat.transform.position.y + 1, 1.5f, Ease.OutQuad);
-        // Tween.PositionZ(meat.transform, meat.transform.position.z + Random.Range(-1, 1f), 1.5f, Ease.OutQuad);
+        float dur = 0.5f;
+
+        Sequence.Create()
+            .Group(Tween.PositionX(meat.transform, meat.transform.position.x + Random.Range(-1, 1f), dur))
+            .Group(Tween.PositionY(meat.transform, meat.transform.position.y + 1, dur / 2f, Ease.OutQuad))
+            .Group(Tween.PositionZ(meat.transform, meat.transform.position.z + Random.Range(-1, 1f), dur))
+            .Insert(dur/2, Tween.PositionY(meat.transform, meat.transform.position.y, dur / 2f, Ease.InQuad));
     }
     public Enemy GetRandomEnemy() {
         return _spawnedEnemies[Random.Range(0, _spawnedEnemies.Count)];
