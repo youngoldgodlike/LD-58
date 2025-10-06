@@ -28,6 +28,8 @@ namespace Main.Scripts
         [SerializeField] private GameObject _hud;
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private Image _hpFill;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _hitClip;
 
         [SerializeField] private Animator _animator;
         private CinemachineCamera _cinemachineCamera;
@@ -153,6 +155,8 @@ namespace Main.Scripts
 
             float value = (float) health / 100;
             _hpFill.fillAmount = value;
+            
+            _audioSource.PlayOneShot(_hitClip);
             
             if (health > 0) return;
             

@@ -75,33 +75,46 @@ namespace Main.Scripts
 
         private IEnumerator LaserRoutine()
         {
-            var randomIndex = Random.Range(0, _spawner._spawnedEnemies.Count);
-            var target = _spawner._spawnedEnemies[randomIndex];
-            
-            float time = 0;
-            
             while (true)
             {
-                if (target.health <= 0)
+                // Проверяем, есть ли враги
+                if (_spawner._spawnedEnemies.Count == 0)
                 {
-                    StopCoroutine(_laserRoutine);
-                    _laserRoutine = StartCoroutine(LaserRoutine());
+                    _laserLineRenderer.enabled = false;
+                    yield return new WaitForSeconds(0.5f);
+                    continue;
                 }
-
-                if (target !=null)
+                
+                var randomIndex = Random.Range(0, _spawner._spawnedEnemies.Count);
+                var target = _spawner._spawnedEnemies[randomIndex];
+                
+                if (target == null)
+                {
+                    yield return null;
+                    continue;
+                }
+                
+                _laserLineRenderer.enabled = true;
+                float time = 0;
+                
+                // Атакуем текущую цель, пока она жива
+                while (target != null && target.health > 0)
                 {
                     _laserLineRenderer.SetPosition(0, _projectileSpawner.position);
                     _laserLineRenderer.SetPosition(1, target.transform.position);
+
+                    time += Time.deltaTime;
+
+                    if (time >= _laserHitDelay)
+                    {
+                        target.TakeDamage(_laserDamage);
+                        time = 0;
+                    }
+
+                    yield return null;
                 }
-
-                time += Time.deltaTime;
-
-                if (time >= _laserHitDelay)
-                {
-                   target.TakeDamage(_laserDamage);
-                    time = 0;
-                }
-
+                
+                // Цель уничтожена или стала null, ищем новую
                 yield return null;
             }
         }
@@ -110,16 +123,28 @@ namespace Main.Scripts
         {
             while (true)
             {
-                for (int i = 0; i < _fireballsCount; i++)
+                // Проверяем, есть ли враги перед атакой
+                if (_spawner._spawnedEnemies.Count > 0)
                 {
-                    var randomIndex = Random.Range(0, _spawner._spawnedEnemies.Count);
-
-                    FireBall fireBall = Instantiate(_fireballPrefab);
-                    fireBall.transform.position = _projectileSpawner.transform.position;
-                    fireBall.Attack(_spawner._spawnedEnemies[randomIndex].transform);
-                    
-                    float timeDelay = _fireballsCastDuration / _fireballsCount;
-                    yield return new WaitForSeconds(timeDelay);
+                    for (int i = 0; i < _fireballsCount; i++)
+                    {
+                        // Повторная проверка на случай, если враги закончились во время цикла
+                        if (_spawner._spawnedEnemies.Count == 0)
+                            break;
+                            
+                        var randomIndex = Random.Range(0, _spawner._spawnedEnemies.Count);
+                        var target = _spawner._spawnedEnemies[randomIndex];
+                        
+                        if (target != null)
+                        {
+                            FireBall fireBall = Instantiate(_fireballPrefab);
+                            fireBall.transform.position = _projectileSpawner.transform.position;
+                            fireBall.Attack(target.transform);
+                        }
+                        
+                        float timeDelay = _fireballsCastDuration / _fireballsCount;
+                        yield return new WaitForSeconds(timeDelay);
+                    }
                 }
 
                 yield return new WaitForSeconds(_fireballsCooldown);
