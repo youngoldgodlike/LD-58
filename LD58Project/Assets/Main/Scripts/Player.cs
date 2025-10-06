@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Main.Scripts
 {
@@ -30,6 +31,8 @@ namespace Main.Scripts
         [SerializeField] private Image _hpFill;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _hitClip;
+        [SerializeField] private AudioClip[] _steps;
+        public AudioClip _portalClip;
 
         [SerializeField] private Animator _animator;
         private CinemachineCamera _cinemachineCamera;
@@ -43,17 +46,28 @@ namespace Main.Scripts
 
         public int maxHealth = 100;
         public float health = 100;
-        
+
         [SerializeField] private bool _isActive;
 
         private Coroutine _TurnActiveRoutine;
         private Coroutine _currentFuckRoutine;
-        
+
         Tween _takeDmg;
         float _healthDelay = 0f;
         private bool _isFuck;
+        private float _stepTimer;
+        private float _stepInterval = 0.5f;
 
         public Vector3 position => transform.position;
+
+
+        private void PlayFootstepSound()
+        {
+            if (_steps.Length == 0) return;
+            
+            _audioSource.volume = 0.15f;
+            _audioSource.PlayOneShot(_steps[Random.Range(0, _steps.Length)]);
+        }
 
         public void Initialize() {
             _characterMoveController = GetComponent<CharacterController>(); ;
@@ -81,7 +95,6 @@ namespace Main.Scripts
 
             if (_input.IsFuck && !_isFuck)
             {
-                Debug.Log("Зашло");
                 if (_currentFuckRoutine != null)
                     StopCoroutine(_currentFuckRoutine);
 
@@ -89,14 +102,18 @@ namespace Main.Scripts
                 _animator.SetBool(IsFuck, true);
             }
             
-            
             HandleGroundCheck();
             HandleJumping();
             HandleMovement();
+            HandleFootsteps();
             
         }
 
-        public void TeleportTo(Transform target) {
+        public void TeleportTo(Transform target)
+        {
+
+            _audioSource.volume = 0.35f;
+            _audioSource.PlayOneShot(_portalClip);
             _characterMoveController.enabled = false;
 
             transform.position = target.position;
@@ -156,6 +173,7 @@ namespace Main.Scripts
             float value = (float) health / 100;
             _hpFill.fillAmount = value;
             
+            _audioSource.volume = 0.70f;
             _audioSource.PlayOneShot(_hitClip);
             
             if (health > 0) return;
@@ -238,6 +256,28 @@ namespace Main.Scripts
             move.y = _verticalVelocity;
             
             _characterMoveController.Move(move * Time.deltaTime);
+        }
+
+        private void HandleFootsteps()
+        {
+            // Проверяем: персонаж на земле И движется
+            bool isMoving = _moveDirection.magnitude > 0.1f;
+            
+            if (_isGrounded && isMoving && !_isFuck)
+            {
+                _stepTimer += Time.deltaTime;
+                
+                if (_stepTimer >= _stepInterval)
+                {
+                    PlayFootstepSound();
+                    _stepTimer = 0f;
+                }
+            }
+            else
+            {
+                // Сбрасываем таймер, если не идём
+                _stepTimer = 0f;
+            }
         }
 
         private void HandleMouseLook()
