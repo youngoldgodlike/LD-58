@@ -10,8 +10,8 @@ public class EntryPoint : MonoBehaviour {
 
     void Awake() {
         _terminal.Initialize();
-        _spawner.Initialize(active: false);
-        _tower.Initialize(false);
+        _spawner.Initialize();
+        _tower.Initialize(true);
         _player.Initialize();
         _tutorialManager?.Initialize(_spawner, _tower, _player);
     }

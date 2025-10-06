@@ -69,7 +69,7 @@ namespace Main.Scripts
             _audioSource.PlayOneShot(_steps[Random.Range(0, _steps.Length)]);
         }
 
-        public void Initialize() {
+        public void Initialize(bool active = true) {
             _characterMoveController = GetComponent<CharacterController>(); ;
             _input = new DesktopInput();
             _cinemachineCamera = _cameraTransform.GetComponent<CinemachineCamera>();
@@ -78,6 +78,8 @@ namespace Main.Scripts
             _interactbleSystem = GetComponent<InteractbleSystem>();
             _interactbleSystem .Initialize(_input);
             _terminal?.SetInput(_input);
+            
+            if(active) Enable();
         }
 
         private void Update()
@@ -134,7 +136,7 @@ namespace Main.Scripts
                     continue;
                 }
                 health = Mathf.Clamp(health + Time.deltaTime, 0, maxHealth);
-                _hpFill.fillAmount = maxHealth / health;
+                _hpFill.fillAmount = health / maxHealth;
                 
                 yield return null;
             }
@@ -166,7 +168,7 @@ namespace Main.Scripts
 
             if (health < 0) health = 0;
 
-            float value = (float) health / 100;
+            float value = (float) health / maxHealth;
             _hpFill.fillAmount = value;
             
             _audioSource.volume = 0.70f;

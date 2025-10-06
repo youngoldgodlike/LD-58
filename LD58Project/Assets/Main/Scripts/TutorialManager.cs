@@ -13,13 +13,17 @@ public class TutorialManager : MonoBehaviour {
     Player _player;
     
     public void Initialize(Spawner spawner, TowerZek tower, Player player) {
+        if (PlayerPrefs.GetInt("TutorialCompleted") == 1) {
+            _blackScreen.color = _blackScreen.color.WithAlpha(0);
+            return;
+        }
+        
         _spawner = spawner;
         _tower = tower;
         _player = player;
         
         _player.Disable();
         
-        if (PlayerPrefs.GetInt("TutorialCompleted") == 1) return;
         
         _blackScreen.color = _blackScreen.color.WithAlpha(1);
         StartCoroutine(_beginTutor.Begin());
