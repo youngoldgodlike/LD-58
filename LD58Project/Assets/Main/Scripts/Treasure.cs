@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Treasure : MonoBehaviour 
 {
     public int cost;
-    public bool isOil;
+    [FormerlySerializedAs("isOil")] public bool isMeat;
     public bool isTaken;
 
     private Coroutine _disposeRoutine;
@@ -16,7 +17,7 @@ public class Treasure : MonoBehaviour
     {
         StartCoroutine(RotateRoutine());
 
-        if (isOil)
+        if (isMeat)
             _disposeRoutine = StartCoroutine(DisposeRoutine());
     }
 

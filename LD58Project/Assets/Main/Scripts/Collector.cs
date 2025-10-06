@@ -30,7 +30,7 @@ public class Collector : MonoBehaviour {
             Tween.LocalRotation(treasure.transform, -treasure.transform.forward, sosalTimeForOne);
             yield return Tween.Scale(treasure.transform, 0, sosalTimeForOne);
             
-            if (treasure.isOil) _tower.AddOil();
+            if (treasure.isMeat) _tower.AddOil();
             else _terminal.AddMoney(treasure.cost);
            
             
