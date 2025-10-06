@@ -17,6 +17,8 @@ public class TutorialManager : MonoBehaviour {
         _tower = tower;
         _player = player;
         
+        _player.Disable();
+        
         if (PlayerPrefs.GetInt("TutorialCompleted") == 1) return;
         
         _blackScreen.color = _blackScreen.color.WithAlpha(1);

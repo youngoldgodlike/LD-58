@@ -78,9 +78,6 @@ namespace Main.Scripts
             _interactbleSystem = GetComponent<InteractbleSystem>();
             _interactbleSystem .Initialize(_input);
             _terminal?.SetInput(_input);
-            // Enable();
-            
-            // Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void Update()
@@ -106,7 +103,6 @@ namespace Main.Scripts
             HandleJumping();
             HandleMovement();
             HandleFootsteps();
-            
         }
 
         public void TeleportTo(Transform target) {

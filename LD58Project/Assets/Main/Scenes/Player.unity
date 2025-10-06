@@ -487,6 +487,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 933322994}
+  - {fileID: 1474097219}
   m_Father: {fileID: 1459274188}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -1229,7 +1230,7 @@ Transform:
   m_GameObject: {fileID: 465441633}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855694, y: 1.1102232e-16, z: -1.1102232e-16, w: 1}
-  m_LocalPosition: {x: -0, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1248,7 +1249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.FLowersSpawner
   Flower_prefab: {fileID: 242127758894322516, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
-  _spawnDuration: 0
+  _range: {x: 30, y: 60}
 --- !u!1001 &468445897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1596,6 +1597,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507546125}
   m_CullTransparentMesh: 1
+--- !u!1001 &551982483
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6324185064075369096, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_Name
+      value: Flower
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 50.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1.1102232e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1.1102232e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669783097321144370, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
 --- !u!1 &573026420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,7 +2009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3750,8 +3808,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057660403}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5618157, y: 1.9035695, z: -43.88076}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.03, y: 2.23, z: 21.27246}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4155,14 +4213,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091266919}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5618157, y: 1.4035695, z: -43.88076}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.03, y: 1.73, z: 21.27246}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1924421390}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1091266924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4574,6 +4632,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9211434837734154930, guid: 2f52f48a51f86bc4e825f64ab3cb722f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4868,7 +4930,7 @@ MonoBehaviour:
   _enemiesPrefab:
   - {fileID: 6744976092787738996, guid: 052702357bda1c6498bb4dfdf79123f2, type: 3}
   - {fileID: 777376858268029699, guid: a7eb07f7f4c89df459fd653f50d80275, type: 3}
-  - {fileID: 2208172928594658676, guid: 8a5e42b60aa76d74198b98c273fd60ff, type: 3}
+  - {fileID: 2208172928594658676, guid: 60998696e19ddb3469da612d61d8d1b0, type: 3}
   _meatPrefab: {fileID: 5548154370157461002, guid: b7d48e788f89dca4bbdc5c9f00d6238d, type: 3}
   requiredPower: 100
   currentPower: 0
@@ -5638,7 +5700,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1057660405}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -5726,6 +5788,81 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1924156065}
   m_SourcePrefab: {fileID: 100100000, guid: fb81b8457aa91a542a674f3a2ce25bbb, type: 3}
+--- !u!1 &1474097218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1474097219}
+  - component: {fileID: 1474097221}
+  - component: {fileID: 1474097220}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1474097219
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474097218}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 179355840}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: -19.9, y: 1.8}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1474097220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474097218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 85f6ed23ffb9d6c479f46a098a834218, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1474097221
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474097218}
+  m_CullTransparentMesh: 1
 --- !u!1 &1478111517
 GameObject:
   m_ObjectHideFlags: 0
@@ -6050,7 +6187,7 @@ Transform:
   m_GameObject: {fileID: 1556105944}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855694, y: 1.1102232e-16, z: -1.1102232e-16, w: 1}
-  m_LocalPosition: {x: -0, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6069,7 +6206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.FLowersSpawner
   Flower_prefab: {fileID: 242127758894322516, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
-  _spawnDuration: 0
+  _range: {x: 30, y: 60}
 --- !u!1 &1622102766
 GameObject:
   m_ObjectHideFlags: 0
@@ -6364,7 +6501,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1660351564}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1012416897}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1660351564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7740,7 +7889,7 @@ Transform:
   m_GameObject: {fileID: 2104702745}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855694, y: 1.1102232e-16, z: -1.1102232e-16, w: 1}
-  m_LocalPosition: {x: -0, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7759,7 +7908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.FLowersSpawner
   Flower_prefab: {fileID: 242127758894322516, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
-  _spawnDuration: 0
+  _range: {x: 30, y: 60}
 --- !u!1 &2118913614
 GameObject:
   m_ObjectHideFlags: 0
@@ -7865,7 +8014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.FLowersSpawner
   Flower_prefab: {fileID: 242127758894322516, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
-  _spawnDuration: 0
+  _range: {x: 30, y: 60}
 --- !u!4 &2135414614
 Transform:
   m_ObjectHideFlags: 0
@@ -7875,7 +8024,7 @@ Transform:
   m_GameObject: {fileID: 2135414612}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855694, y: 1.1102232e-16, z: -1.1102232e-16, w: 1}
-  m_LocalPosition: {x: -0, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7907,7 +8056,7 @@ Transform:
   m_GameObject: {fileID: 2142550670}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855694, y: 1.1102232e-16, z: -1.1102232e-16, w: 1}
-  m_LocalPosition: {x: -0, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7926,7 +8075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.FLowersSpawner
   Flower_prefab: {fileID: 242127758894322516, guid: ad35b38dd28494042b0f7c2e04ce362d, type: 3}
-  _spawnDuration: 0
+  _range: {x: 30, y: 60}
 --- !u!1001 &2445285605691857954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11092,3 +11241,4 @@ SceneRoots:
   - {fileID: 698129980}
   - {fileID: 1004088514}
   - {fileID: 1040183789}
+  - {fileID: 551982483}

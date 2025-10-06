@@ -6,13 +6,14 @@ namespace Main.Scripts
     public class FLowersSpawner : MonoBehaviour
     {
         [SerializeField] private Treasure Flower_prefab;
-        [SerializeField] private float _spawnDuration;
+        [SerializeField] private Vector2 _range;
+         private float _spawnDuration;
 
         private Treasure _currentTreasure;
 
         private void Awake()
         {
-            _spawnDuration = Random.Range(1f, 3f);
+            _spawnDuration = Random.Range(_range.x, _range.y);
 
             StartCoroutine(HandleSpawnDelay());
         }
