@@ -44,10 +44,11 @@ public class TowerZek : MonoBehaviour
     
     float fireballCD() => _fireballsCooldown / _fireballsCount;
         
-    private void Start() {
+    public void Initialize(bool active) {
+        _isPaused = !active;
         _waitPause = new(() => _isPaused);
         _waitFireballCD = new(fireballCD);
-        _spawner.Initialize();
+        // _spawner.Initialize();
         
         StartCoroutine(FireballProcess());
         var lazer = Instantiate(_laserPrefab);

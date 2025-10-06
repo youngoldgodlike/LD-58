@@ -43,13 +43,11 @@ public class Bagy : MonoBehaviour {
         treasure.isTaken = true;
         treasure.gameObject.SetActive(false);
         treasures.Add(treasure);
+        UpdateUI();
 
         var randomPitch = Random.Range(0.9f, 1.1f);
         _audioSource.pitch = randomPitch;
-        
         _audioSource.PlayOneShot(_pickUpClip);
-        
-        UpdateUI();
     }
     public Treasure Take() 
     {

@@ -30,7 +30,8 @@ public class Spawner : MonoBehaviour {
     bool _isActive = true;
     
     [ContextMenu(nameof(Initialize))]
-    public void Initialize() {
+    public void Initialize(bool active = true) {
+        _isActive = active;
         _wait = new(_checkCooldown);
         _waitActivate = new(() => _isActive == false);
         sqrFarDis = _farDistance * _farDistance;
@@ -41,9 +42,10 @@ public class Spawner : MonoBehaviour {
         StartCoroutine(Procces());
     }
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Mouse4)) {
-            KillRandom();
-        }
+        if (_isActive == false) return;
+        // if (Input.GetKeyDown(KeyCode.Mouse4)) {
+        //     KillRandom();
+        // }
         foreach (Enemy enemy in _spawnedEnemies) {
             enemy.UpdateMe();
         }
