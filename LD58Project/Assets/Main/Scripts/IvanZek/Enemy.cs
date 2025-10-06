@@ -71,18 +71,20 @@ public class Enemy : MonoBehaviour {
             Tween.MaterialColor(_meshRenderer.material, Color.red, _baseColor, 0.5f);
         }
         if (_skinned) {
-            // if (_hitRoutine == null) _hitRoutine = StartCoroutine(HitRoutine());
-            if(Tween.GetTweensCount(_skinned.material) > 0) return;
-            Tween.MaterialColor(_skinned.material, Color.red, _baseColor, 0.5f);
-
+            if (_hitRoutine == null) _hitRoutine = StartCoroutine(HitRoutine());
+            // if(Tween.GetTweensCount(_skinned.material) > 0) return;
+            // Tween.MaterialColor(_skinned.material, Color.red, _baseColor, 0.5f);
         }
+    }
+    [ContextMenu("TakeDamageTest")]
+    public void TakeDamageTest() {
+        TakeDamage(0);
     }
 
     WaitForSeconds _wait = new(0.3f);
     IEnumerator HitRoutine() {
         _skinned.material = _hitMat;
         
-
         yield return _wait;
 
         _skinned.material = _baseMat;
