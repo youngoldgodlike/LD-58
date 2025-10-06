@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Main.Scripts;
@@ -25,6 +26,8 @@ public class Spawner : MonoBehaviour {
     [Header("Runtime")]
     public List<Enemy> _spawnedEnemies  = new(40);
 
+    public event Action OnSpawn = delegate { };
+    
     WaitForSeconds _wait;
     WaitWhile _waitActivate;
     bool _isActive = true;
@@ -101,6 +104,7 @@ public class Spawner : MonoBehaviour {
             }
             
             yield return _wait;
+            OnSpawn.Invoke();
         }
     }
     List<Enemy> GetDeficientEnemies() {

@@ -25,11 +25,26 @@ public class TutorialManager : MonoBehaviour {
         StartCoroutine(_beginTutor.Begin());
 
         _beginTutor.OnNext += ContinueGame;
+        spawner.OnSpawn += ShowEnemyTutor;
     }
     void ContinueGame() {
         _spawner.SetActive(true);
         _tower.StartAttack();
         _player.Enable();
         Tween.Alpha(_blackScreen, 0f, 0.65f);
+    }
+    
+    void ShowEnemyTutor() {
+        _spawner.OnSpawn -= ShowEnemyTutor;
+        _spawner.SetActive(false);
+        _tower.StopAttack();
+        _player.Disable();
+        StartCoroutine(_mobsTutor.Begin());
+        _mobsTutor.OnNext += () => {
+            _spawner.SetActive(true);
+            _tower.StartAttack();
+            _player.Enable();
+            PlayerPrefs.SetInt("TutorialCompleted", 1);
+        };
     }
 }
