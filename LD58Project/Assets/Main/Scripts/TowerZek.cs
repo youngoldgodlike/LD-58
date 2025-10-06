@@ -166,16 +166,21 @@ public class TowerZek : MonoBehaviour
             lazer.dmg = _laserDamage;
         }
     }
+    [ContextMenu("IncraseLaserCount")]
     public void IncraseLaserCount() {
         var laser = Instantiate(_laserPrefab);
         _lazers.Add(laser);
         StartCoroutine(LaserRoutine(laser.transform));
     }
+    [ContextMenu("IncraseLaserSpeed")]
     public void IncraseLaserSpeed() {
         _laserSpeed += 1f;
     }
+    [ContextMenu("IncraseFireBall_Damage")]
     public void IncraseFireBall_Damage() => _fireballDamage += 10f;
+    [ContextMenu("IncraseFireBall_Radius")]
     public void IncraseFireBall_Radius() => _fireballRadius += 0.5f;
+    [ContextMenu("IncraseFireBall_Count")]
     public void IncraseFireBall_Count() => _fireballsCount += 1;
     public void StopAttack() => _isPaused = true;
     public void StartAttack() => _isPaused = false;

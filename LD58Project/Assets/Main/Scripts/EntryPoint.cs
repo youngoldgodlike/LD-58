@@ -13,7 +13,7 @@ public class EntryPoint : MonoBehaviour {
         _spawner.Initialize(active: false);
         _tower.Initialize(false);
         _player.Initialize();
-        _tutorialManager.Initialize(_spawner, _tower, _player);
+        _tutorialManager?.Initialize(_spawner, _tower, _player);
 
 
         _player.Enable();

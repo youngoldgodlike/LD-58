@@ -11,6 +11,9 @@ namespace Main.Scripts
 {
     public class Player : MonoBehaviour
     {
+        private static readonly int IsRun = Animator.StringToHash("isRun");
+        private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
+
         [Header("Parameters")]
         [SerializeField] private float _moveSpeed = 1.5f;
         [SerializeField] private float _mouseSensitivity = 2f;
@@ -25,6 +28,8 @@ namespace Main.Scripts
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private Image _hpFill;
 
+
+        [SerializeField] private Animator _animator;
         private CinemachineCamera _cinemachineCamera;
         private CharacterController _characterMoveController;
         private bool _isGrounded;
@@ -129,9 +134,14 @@ namespace Main.Scripts
         {
             if (!_isActive) return;
             
+            
+            _animator.SetBool(IsGrounded, _isGrounded);
+            _animator.SetBool(IsRun,  _moveDirection != Vector2.zero);
+            
             HandleGroundCheck();
             HandleJumping();
             HandleMovement();
+            
         }
 
         private void LateUpdate()
