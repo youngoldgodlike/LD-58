@@ -30,7 +30,7 @@ namespace Main.Scripts
 
         private void Start()
         {
-            _spawner.Initialize();
+            // _spawner.Initialize();
             
             _laserLineRenderer.positionCount = 2;
             

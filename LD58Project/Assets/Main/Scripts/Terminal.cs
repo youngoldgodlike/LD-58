@@ -41,8 +41,7 @@ namespace Main.Scripts
 
         public string Id => "Terminal";
 
-        private void Awake()
-        {
+        public void Initialize() {
             _interactbleSystem = FindObjectOfType<InteractbleSystem>();
             _tower = FindObjectOfType<TowerZek>();
             _spawner = FindObjectOfType<Spawner>();
@@ -127,6 +126,10 @@ namespace Main.Scripts
             
             UpdateMoneyUI();
             InitializeUpdateView();
+        }
+        
+        public void SetInput(DesktopInput input) {
+            _input = input;
         }
 
         private void Update()
@@ -237,11 +240,6 @@ namespace Main.Scripts
             _isOpen = false;
             _interactbleSystem.SetActive(true);
             _spawner.SetActive(true);
-        }
-
-        public void Initialize(DesktopInput input)
-        {
-            _input = input;
         }
     }
 }

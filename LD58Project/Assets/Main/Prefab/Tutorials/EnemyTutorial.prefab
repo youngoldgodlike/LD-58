@@ -92,17 +92,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialView
   _continueBtn: {fileID: 4805626554524727209}
+  _continueBtnText: {fileID: 4102479288920694868}
+  _image: {fileID: 7473332109633919207}
   _tmp: {fileID: 5443818219549770604}
-  _text: '<sp:30>- The enemy
+  _text: '<size=150%><sp:35>The enemy <p:short></size>
 
 
-    Application: use as nutrients for biological guard
+    Application: use as
+    nutrients for biological guard <p:short>
 
 
-    Note:
+    <anim:shake><size=150%>Note:</size></anim><p:normal>
 
     The
     product is delivered automatically at the terminal.'
+  _waitBeforeTextBegin: 0
+  _imageBeginAlpha: 0
+  _imageAlphaDur: 1
+  _contBtnBeginAlpha: 0
+  _contBtnAlphaDur: 1.5
+  _contBtnDelay: 2
 --- !u!1 &6825460448904369165
 GameObject:
   m_ObjectHideFlags: 0

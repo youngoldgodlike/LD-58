@@ -45,32 +45,31 @@ namespace Main.Scripts
         
         public Vector3 position => transform.position;
 
-        private void Awake() {
+        public void Initialize() {
             _characterMoveController = GetComponent<CharacterController>(); ;
             _input = new DesktopInput();
-            _cinemachineCamera=  _cameraTransform.GetComponent<CinemachineCamera>();
+            _cinemachineCamera = _cameraTransform.GetComponent<CinemachineCamera>();
             StartCoroutine(HealthRegeneration());
             
             _interactbleSystem = GetComponent<InteractbleSystem>();
             _interactbleSystem .Initialize(_input);
-            _terminal?.Initialize(_input);
-            Enable();
+            _terminal?.SetInput(_input);
+            // Enable();
             
             // Cursor.lockState = CursorLockMode.Locked;
         }
 
-        public void TeleportTo(Transform target)
-        {
+        public void TeleportTo(Transform target) {
             _characterMoveController.enabled = false;
-            
+
             transform.position = target.position;
             transform.rotation = target.rotation;
-            
+
             _characterMoveController.enabled = true;
         }
 
-        public void Enable(float delayBeforeEnable = 0)
-        {
+        public void Enable(float delayBeforeEnable = 0) {
+            Cursor.lockState = CursorLockMode.Locked;
             _TurnActiveRoutine = StartCoroutine(EnableRoutine(delayBeforeEnable));
         }
         private IEnumerator HealthRegeneration() {
@@ -96,8 +95,8 @@ namespace Main.Scripts
             _isActive = true;
         }
 
-        public void Disable()
-        {
+        public void Disable() {
+            Cursor.lockState = CursorLockMode.None;
             if (_TurnActiveRoutine != null)
                 StopCoroutine(_TurnActiveRoutine);
             
