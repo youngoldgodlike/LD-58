@@ -71,6 +71,8 @@ public class TowerZek : MonoBehaviour
     {
         _currentOil = Mathf.Clamp(_currentOil + 5, 0, _maxOil);
 
+        StartAttack();
+        
         if (_oilRoutine == null)
             _oilRoutine = StartCoroutine(OilHandle());
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Bagy : MonoBehaviour {
     [SerializeField] Transform _container;
@@ -10,6 +11,8 @@ public class Bagy : MonoBehaviour {
 
     [SerializeField] private int _capacity = 10;
     [SerializeField] private Image _progressBarFill;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _pickUpClip;
 
     private void Awake()
     {
@@ -40,6 +43,11 @@ public class Bagy : MonoBehaviour {
         treasure.isTaken = true;
         treasure.gameObject.SetActive(false);
         treasures.Add(treasure);
+
+        var randomPitch = Random.Range(0.9f, 1.1f);
+        _audioSource.pitch = randomPitch;
+        
+        _audioSource.PlayOneShot(_pickUpClip);
         
         UpdateUI();
     }

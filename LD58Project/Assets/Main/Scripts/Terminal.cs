@@ -22,6 +22,7 @@ namespace Main.Scripts
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _enterClip;
         [SerializeField] private AudioClip _exitClip;
+        [SerializeField] private AudioClip _updateSelectClip;
         [SerializeField] private UpdateViewConfig _config;
         [SerializeField] private List<UpdateView> _updateViews;
         [SerializeField] private Button _closebutton;
@@ -31,8 +32,6 @@ namespace Main.Scripts
         private Dictionary<string, Action> _updates;
         Spawner _spawner;
         
-        
-
         private int _towerLevel;
        [SerializeField] private float _initialScale = 0.01f;
         
@@ -60,6 +59,7 @@ namespace Main.Scripts
                     _money -= 50;
                     UpdateMoneyUI();
                     InitializeUpdateView();
+                    _audioSource.PlayOneShot(_updateSelectClip);
                     
                 }},
                 {"laser_Count", () =>
@@ -71,6 +71,7 @@ namespace Main.Scripts
                         _money -= 50;
                         UpdateMoneyUI();
                         InitializeUpdateView();
+                        _audioSource.PlayOneShot(_updateSelectClip);
                     }
                 },
                 {"laser_Speed", () =>
@@ -82,6 +83,7 @@ namespace Main.Scripts
                         _money -= 50;
                         UpdateMoneyUI();
                         InitializeUpdateView();
+                        _audioSource.PlayOneShot(_updateSelectClip);
                     }
                 },
                 {"FireBall_Damage",() =>
@@ -93,6 +95,7 @@ namespace Main.Scripts
                         _money -= 50;
                         UpdateMoneyUI(); 
                         InitializeUpdateView();
+                        _audioSource.PlayOneShot(_updateSelectClip);
                     }
                 },
                 {"FireBall_Radius",() =>
@@ -104,6 +107,7 @@ namespace Main.Scripts
                         _money -= 50;
                         UpdateMoneyUI();
                         InitializeUpdateView();
+                        _audioSource.PlayOneShot(_updateSelectClip);
                     }
                 },
                 {"FireBall_Count", () =>
@@ -116,6 +120,7 @@ namespace Main.Scripts
                         _money -= 50;
                         UpdateMoneyUI();
                         InitializeUpdateView();
+                        _audioSource.PlayOneShot(_updateSelectClip);
                     }
                 },
             };

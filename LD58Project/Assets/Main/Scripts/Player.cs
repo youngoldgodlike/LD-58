@@ -59,6 +59,16 @@ namespace Main.Scripts
             // Cursor.lockState = CursorLockMode.Locked;
         }
 
+        public void TeleportTo(Transform target)
+        {
+            _characterMoveController.enabled = false;
+            
+            transform.position = target.position;
+            transform.rotation = target.rotation;
+            
+            _characterMoveController.enabled = true;
+        }
+
         public void Enable(float delayBeforeEnable = 0)
         {
             _TurnActiveRoutine = StartCoroutine(EnableRoutine(delayBeforeEnable));
