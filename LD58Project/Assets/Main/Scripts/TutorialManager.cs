@@ -1,9 +1,10 @@
 ﻿using Main.Scripts;
 using PrimeTween;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+public static class ColorExt {
+    public static Color WithAlpha(this Color color, float a) => new Color(color.r, color.g, color.b, a);
+}
 public class TutorialManager : MonoBehaviour {
     [SerializeField] TutorialView _mobsTutor, _beginTutor;
     [SerializeField] Image _blackScreen;
