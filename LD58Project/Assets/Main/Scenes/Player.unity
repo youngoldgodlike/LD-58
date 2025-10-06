@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.UpdateView
   _text: {fileID: 948285182}
+  _cost: {fileID: 1778044152}
   _image: {fileID: 573026422}
 --- !u!114 &33242532
 MonoBehaviour:
@@ -893,6 +894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.UpdateView
   _text: {fileID: 1816868818}
+  _cost: {fileID: 639495391}
   _image: {fileID: 1161599411}
 --- !u!114 &392683778
 MonoBehaviour:
@@ -2154,7 +2156,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726371360}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4833,11 +4835,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a978bed6a6a3c54ab99769fb1d578ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
+  _terminal: {fileID: 0}
   _player: {fileID: 1091266924}
   _enemiesPrefab:
   - {fileID: 6744976092787738996, guid: 052702357bda1c6498bb4dfdf79123f2, type: 3}
   - {fileID: 777376858268029699, guid: a7eb07f7f4c89df459fd653f50d80275, type: 3}
-  - {fileID: 2208172928594658676, guid: 60998696e19ddb3469da612d61d8d1b0, type: 3}
+  - {fileID: 2208172928594658676, guid: 8a5e42b60aa76d74198b98c273fd60ff, type: 3}
   _meatPrefab: {fileID: 5548154370157461002, guid: b7d48e788f89dca4bbdc5c9f00d6238d, type: 3}
   requiredPower: 100
   currentPower: 0
@@ -6180,15 +6183,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: '? - "F"'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d11118a4f22c3954490e7a38fe08dd1c, type: 2}
+  m_sharedMaterial: {fileID: -4609972337727764962, guid: d11118a4f22c3954490e7a38fe08dd1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6211,7 +6214,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -7674,6 +7677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main.Scripts.UpdateView
   _text: {fileID: 455300798}
+  _cost: {fileID: 1314042616}
   _image: {fileID: 489325541}
 --- !u!114 &1912179379
 MonoBehaviour:
@@ -8129,15 +8133,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Interact with terminal - "E"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d11118a4f22c3954490e7a38fe08dd1c, type: 2}
+  m_sharedMaterial: {fileID: -4609972337727764962, guid: d11118a4f22c3954490e7a38fe08dd1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8160,7 +8164,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535

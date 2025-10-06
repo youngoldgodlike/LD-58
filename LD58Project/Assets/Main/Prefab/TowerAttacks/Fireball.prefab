@@ -239,7 +239,7 @@ MonoBehaviour:
   _startRadDelta: 0
   _radDeltaPerSec: 1
   _speed: 35
-  _damage: 50
+  _damage: 35
   _exlposionRadius: 5
   _explosionPrefab: {fileID: 1702846841130241024, guid: 8d83a0ec51ca8b24f9efe8f4e5ade7c2, type: 3}
   _outline: {fileID: 1405270860864934204}

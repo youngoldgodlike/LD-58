@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using UnityEditor.Rendering;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Main.Scripts
@@ -7,14 +7,22 @@ namespace Main.Scripts
     public class FireBall : MonoBehaviour {
         [SerializeField] float _startRadDelta;
         [SerializeField] float _radDeltaPerSec = 1f;
-        [SerializeField] private float _speed = 10;
-            
+        [SerializeField] float _speed = 10;
+
+        float baseSpeed;    
+        
         [SerializeField] public float _damage = 10;
         [SerializeField] public float _exlposionRadius = 5;
         [SerializeField] private GameObject _explosionPrefab;
         [SerializeField] private Transform _outline;
         [SerializeField] private LayerMask _ememyLayer;
-        
+
+        public event Action<FireBall> OnExplode = delegate { }; 
+
+        void Awake() {
+            baseSpeed = _speed;
+        }
+
         public void Attack(Transform target)
         {
             StartCoroutine(FlyToTargetCoroutine(target));
@@ -48,6 +56,7 @@ namespace Main.Scripts
 
             var collision = Physics.OverlapSphere(transform.position, _exlposionRadius);
             GetDamage(collision);
+            OnExplode.Invoke(this);
             
             Destroy(gameObject);
         }
@@ -60,5 +69,11 @@ namespace Main.Scripts
                     enemy.TakeDamage(_damage);
             }
         }
+        public void SetBaseSpeed(float spd) {
+            baseSpeed = spd;
+            _speed = spd;
+        }
+        public void Stop() => _speed = 0;
+        public void Resume() => _speed = baseSpeed;
     }
 }

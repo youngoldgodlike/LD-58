@@ -9,9 +9,10 @@ public class EntryPoint : MonoBehaviour {
     [SerializeField] TowerZek _tower;
 
     void Awake() {
+        PlayerPrefs.SetInt("TutorialCompleted", 0);
         _terminal.Initialize();
-        _spawner.Initialize();
-        _tower.Initialize(true);
+        _spawner.Initialize(_terminal,false);
+        _tower.Initialize(false);
         _player.Initialize();
         _tutorialManager?.Initialize(_spawner, _tower, _player);
     }

@@ -58,7 +58,7 @@ MonoBehaviour:
   _deathParticle: {fileID: 4404536314446115546, guid: 30d21d20f19ca364796b00bd593cfff5, type: 3}
   target: {fileID: 0}
   damage: 10
-  health: 10
+  health: 35
   speed: 4
   power: 15
 --- !u!195 &5117598494038499892

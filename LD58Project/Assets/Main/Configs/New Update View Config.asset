@@ -15,7 +15,7 @@ MonoBehaviour:
   ViewData:
   - id: laser_Damage
     Description: Increase laser damage
-    cost: 50
+    cost: 25
     Sprite: {fileID: 21300000, guid: a72a9b4e9ef732444a7a7eeb28d5d5ac, type: 3}
   - id: laser_Count
     Description: Increase laser count
@@ -23,15 +23,15 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: a72a9b4e9ef732444a7a7eeb28d5d5ac, type: 3}
   - id: laser_Speed
     Description: Increase laser speed
-    cost: 50
+    cost: 35
     Sprite: {fileID: 21300000, guid: a72a9b4e9ef732444a7a7eeb28d5d5ac, type: 3}
   - id: FireBall_Damage
-    Description: Increase fire ball speed
-    cost: 50
+    Description: Increase fire ball damage
+    cost: 25
     Sprite: {fileID: 21300000, guid: 6fac7de0829d46e44bc176a28e166e31, type: 3}
   - id: FireBall_Radius
     Description: Increase fire ball explosion radius
-    cost: 50
+    cost: 30
     Sprite: {fileID: 21300000, guid: 6fac7de0829d46e44bc176a28e166e31, type: 3}
   - id: FireBall_Count
     Description: Increase fire ball count

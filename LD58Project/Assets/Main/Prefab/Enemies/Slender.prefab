@@ -57,8 +57,8 @@ MonoBehaviour:
   _deathParticle: {fileID: 4404536314446115546, guid: 30d21d20f19ca364796b00bd593cfff5, type: 3}
   target: {fileID: 0}
   damage: 10
-  health: 60
-  speed: 2
+  health: 55
+  speed: 3.5
   power: 16
 --- !u!195 &1174204396860062132
 NavMeshAgent:

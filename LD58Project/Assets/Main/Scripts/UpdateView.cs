@@ -9,6 +9,7 @@ namespace Main.Scripts
     public class UpdateView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private TMP_Text _text;
+        [SerializeField] TMP_Text _cost;
         [SerializeField] private Image _image;
 
         private Action actionOnClick;
@@ -28,8 +29,8 @@ namespace Main.Scripts
             actionOnClick?.Invoke();
         }
 
-        public void Initialize(Sprite sprite, string Description, Action action)
-        {
+        public void Initialize(Sprite sprite, string Description,float cost, Action action) {
+            _cost.SetText(cost.ToString());
             _text.text = Description;
             _image.sprite = sprite;
             actionOnClick = action;

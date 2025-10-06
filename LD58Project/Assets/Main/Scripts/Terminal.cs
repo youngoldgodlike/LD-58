@@ -40,6 +40,7 @@ namespace Main.Scripts
         private int _money;
 
         public string Id => "Terminal";
+        public event Action OnUpgrade = delegate { };
 
         public void Initialize() {
             _interactbleSystem = FindObjectOfType<InteractbleSystem>();
@@ -53,9 +54,10 @@ namespace Main.Scripts
                 {"laser_Damage", () =>
                 {
                     Debug.Log("Есть контакт");
-                    if (_money < 50) return;
+                    if (_money < 25) return;
                     _tower.IncraseLaserDamage();
                     _money -= 50;
+                    OnUpgrade.Invoke();
                     UpdateMoneyUI();
                     InitializeUpdateView();
                     _audioSource.PlayOneShot(_updateSelectClip);
@@ -68,6 +70,7 @@ namespace Main.Scripts
                         if (_money < 50) return;
                         _tower.IncraseLaserCount();
                         _money -= 50;
+                        OnUpgrade.Invoke();
                         UpdateMoneyUI();
                         InitializeUpdateView();
                         _audioSource.PlayOneShot(_updateSelectClip);
@@ -77,9 +80,10 @@ namespace Main.Scripts
                     {
                         
                         Debug.Log("Есть контакт");
-                        if (_money < 50) return;
+                        if (_money < 35) return;
                         _tower.IncraseLaserSpeed();
                         _money -= 50;
+                        OnUpgrade.Invoke();
                         UpdateMoneyUI();
                         InitializeUpdateView();
                         _audioSource.PlayOneShot(_updateSelectClip);
@@ -89,9 +93,10 @@ namespace Main.Scripts
                     {
                         
                         Debug.Log("Есть контакт");
-                        if (_money < 50) return;
+                        if (_money < 25) return;
                         _tower.IncraseFireBall_Damage();
                         _money -= 50;
+                        OnUpgrade.Invoke();
                         UpdateMoneyUI(); 
                         InitializeUpdateView();
                         _audioSource.PlayOneShot(_updateSelectClip);
@@ -101,9 +106,10 @@ namespace Main.Scripts
                     {
                         
                         Debug.Log("Есть контакт");
-                        if (_money < 50) return;                        
+                        if (_money < 30) return;                        
                         _tower.IncraseFireBall_Radius();
                         _money -= 50;
+                        OnUpgrade.Invoke();
                         UpdateMoneyUI();
                         InitializeUpdateView();
                         _audioSource.PlayOneShot(_updateSelectClip);
@@ -117,6 +123,7 @@ namespace Main.Scripts
                         
                         _tower.IncraseFireBall_Count();
                         _money -= 50;
+                        OnUpgrade.Invoke();
                         UpdateMoneyUI();
                         InitializeUpdateView();
                         _audioSource.PlayOneShot(_updateSelectClip);
@@ -171,7 +178,7 @@ namespace Main.Scripts
                
                var value =  _updates.FirstOrDefault(x => x.Key == randomValue.id);
 
-               view.Initialize(randomValue.Sprite, randomValue.Description, value.Value);
+               view.Initialize(randomValue.Sprite, randomValue.Description, randomValue.cost, value.Value);
 
                for (int i = data.Count -1; i >= 0; i--) {
                    if(values.ContainsKey(data[i].id)) continue;

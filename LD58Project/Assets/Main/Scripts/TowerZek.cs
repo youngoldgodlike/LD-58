@@ -41,6 +41,7 @@ public class TowerZek : MonoBehaviour
     WaitWhile _waitPause;
     CustomWait _waitFireballCD;
     [SerializeField] bool _isPaused;
+    List<FireBall> _fireBalls = new();
     
     float fireballCD() => _fireballsCooldown / _fireballsCount;
         
@@ -156,9 +157,14 @@ public class TowerZek : MonoBehaviour
             fireBall._exlposionRadius = _fireballRadius;
             fireBall.transform.position = _projectileSpawner.transform.position;
             fireBall.Attack(_spawner._spawnedEnemies[randomIndex].transform);
+            fireBall.OnExplode += RemoveFireball;
+            _fireBalls.Add(fireBall);
 
             yield return _waitFireballCD;
         }
+    }
+    void RemoveFireball(FireBall obj) {
+        _fireBalls.Remove(obj);
     }
     public void IncraseLaserDamage() {
         _laserDamage += 10f;
@@ -182,6 +188,16 @@ public class TowerZek : MonoBehaviour
     public void IncraseFireBall_Radius() => _fireballRadius += 0.5f;
     [ContextMenu("IncraseFireBall_Count")]
     public void IncraseFireBall_Count() => _fireballsCount += 1;
-    public void StopAttack() => _isPaused = true;
-    public void StartAttack() => _isPaused = false;
+    public void StopAttack() {
+        foreach (FireBall ball in _fireBalls) {
+            if (ball) ball.Stop();
+        }
+        _isPaused = true;
+    }
+    public void StartAttack() {
+        foreach (FireBall ball in _fireBalls) {
+            if (ball) ball.Resume();
+        }
+        _isPaused = false;
+    }
 }

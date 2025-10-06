@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour {
     [Header("Settings")]
+    [SerializeField] Terminal _terminal;
     [SerializeField] Player _player;
     [SerializeField] List<Enemy> _enemiesPrefab;
     [SerializeField] GameObject _meatPrefab;
@@ -33,7 +34,11 @@ public class Spawner : MonoBehaviour {
     bool _isActive = true;
     
     [ContextMenu(nameof(Initialize))]
-    public void Initialize(bool active = true) {
+    public void Initialize(Terminal terminal,bool active = true) {
+        _terminal = terminal;
+        _terminal.OnUpgrade += () => {
+            requiredPower += 40f;
+        };
         _isActive = active;
         _wait = new(_checkCooldown);
         _waitActivate = new(() => _isActive == false);
