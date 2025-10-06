@@ -13,6 +13,7 @@ namespace Main.Scripts
     {
         private static readonly int IsRun = Animator.StringToHash("isRun");
         private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
+        private static readonly int IsFuck = Animator.StringToHash("isFuck");
 
         [Header("Parameters")]
         [SerializeField] private float _moveSpeed = 1.5f;
@@ -27,7 +28,6 @@ namespace Main.Scripts
         [SerializeField] private GameObject _hud;
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private Image _hpFill;
-
 
         [SerializeField] private Animator _animator;
         private CinemachineCamera _cinemachineCamera;
@@ -45,9 +45,12 @@ namespace Main.Scripts
         [SerializeField] private bool _isActive;
 
         private Coroutine _TurnActiveRoutine;
+        private Coroutine _currentFuckRoutine;
+        
         Tween _takeDmg;
         float _healthDelay = 0f;
-        
+        private bool _isFuck;
+
         public Vector3 position => transform.position;
 
         public void Initialize() {
@@ -64,6 +67,33 @@ namespace Main.Scripts
             // Cursor.lockState = CursorLockMode.Locked;
         }
 
+        private void Update()
+        {
+            if (!_isActive) return;
+
+            if (!_isFuck)
+            {
+                _animator.SetBool(IsGrounded, _isGrounded);
+                _animator.SetBool(IsRun,  _moveDirection != Vector2.zero);
+            }
+
+            if (_input.IsFuck && !_isFuck)
+            {
+                Debug.Log("Зашло");
+                if (_currentFuckRoutine != null)
+                    StopCoroutine(_currentFuckRoutine);
+
+                _currentFuckRoutine =  StartCoroutine(FuckRoutine());
+                _animator.SetBool(IsFuck, true);
+            }
+            
+            
+            HandleGroundCheck();
+            HandleJumping();
+            HandleMovement();
+            
+        }
+
         public void TeleportTo(Transform target) {
             _characterMoveController.enabled = false;
 
@@ -77,6 +107,7 @@ namespace Main.Scripts
             Cursor.lockState = CursorLockMode.Locked;
             _TurnActiveRoutine = StartCoroutine(EnableRoutine(delayBeforeEnable));
         }
+
         private IEnumerator HealthRegeneration() {
             while (true) {
                 if (_healthDelay > 0) {
@@ -130,18 +161,15 @@ namespace Main.Scripts
             Cursor.lockState = CursorLockMode.None;
         }
 
-        private void Update()
+        private IEnumerator FuckRoutine()
         {
-            if (!_isActive) return;
+            _isFuck = true;
+
+            yield return new WaitForSeconds(5f);
             
             
-            _animator.SetBool(IsGrounded, _isGrounded);
-            _animator.SetBool(IsRun,  _moveDirection != Vector2.zero);
-            
-            HandleGroundCheck();
-            HandleJumping();
-            HandleMovement();
-            
+            _isFuck = false;
+            _animator.SetBool(IsFuck, false);
         }
 
         private void LateUpdate()

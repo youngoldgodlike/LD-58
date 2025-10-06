@@ -10,6 +10,14 @@ namespace Main.Scripts
 
         private readonly InputSystem_Actions _input;
         public bool IsInteract => GetInteract();
+        public bool IsFuck => GetFuck();
+
+        private bool GetFuck()
+        {
+            if (!_isActive) return false;
+
+            return _input.Player.Fuck.triggered;
+        }
 
         private bool GetInteract()
         {
