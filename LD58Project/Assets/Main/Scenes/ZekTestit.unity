@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 25883230}
   - component: {fileID: 25883234}
   m_Layer: 5
-  m_Name: OverlayCanvas
+  m_Name: TutorialCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3419,6 +3419,11 @@ MonoBehaviour:
   _hud: {fileID: 1699194032}
   _loseScreen: {fileID: 1112069285}
   _hpFill: {fileID: 1072364627}
+  _audioSource: {fileID: 0}
+  _hitClip: {fileID: 0}
+  _steps: []
+  _portalClip: {fileID: 0}
+  _animator: {fileID: 0}
   _moveDirection: {x: 0, y: 0}
   maxHealth: 100
   health: 100
@@ -3476,7 +3481,8 @@ MonoBehaviour:
   _container: {fileID: 1924421390}
   treasures: []
   _capacity: 10
-  _progressBarFill: {fileID: 862866084}
+  _flowerFill: {fileID: 0}
+  _meatFill: {fileID: 0}
   _audioSource: {fileID: 0}
   _pickUpClip: {fileID: 0}
 --- !u!54 &1091266928

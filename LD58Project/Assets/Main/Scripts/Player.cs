@@ -109,9 +109,7 @@ namespace Main.Scripts
             
         }
 
-        public void TeleportTo(Transform target)
-        {
-
+        public void TeleportTo(Transform target) {
             _audioSource.volume = 0.35f;
             _audioSource.PlayOneShot(_portalClip);
             _characterMoveController.enabled = false;
@@ -140,6 +138,8 @@ namespace Main.Scripts
                     continue;
                 }
                 health = Mathf.Clamp(health + Time.deltaTime, 0, maxHealth);
+                _hpFill.fillAmount = maxHealth / health;
+                
                 yield return null;
             }
         }

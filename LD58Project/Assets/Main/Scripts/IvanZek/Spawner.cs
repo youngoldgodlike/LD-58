@@ -56,6 +56,8 @@ public class Spawner : MonoBehaviour {
                 enemy.Init();
             }
         }
+        
+        requiredPower += (_increasePowerByMinute/60) * Time.deltaTime;
     }
     void FixedUpdate() {
         foreach (Enemy enemy in _spawnedEnemies) {
@@ -67,7 +69,6 @@ public class Spawner : MonoBehaviour {
         while (true) {
             if (_isActive == false) yield return _waitActivate;
 
-            requiredPower += _increasePowerByMinute * Time.deltaTime;
             if (currentPower >= requiredPower) {
                 yield return _wait;
                 continue;
@@ -197,7 +198,7 @@ public class Spawner : MonoBehaviour {
     }
     void CreateMeat(Vector3 spawnPos) {
         var meat = Instantiate(_meatPrefab);
-        meat.transform.position = spawnPos + Vector3.up * 1f;
+        meat.transform.position = spawnPos + Vector3.up * 0.5f;
         float dur = 0.5f;
 
         Sequence.Create()
