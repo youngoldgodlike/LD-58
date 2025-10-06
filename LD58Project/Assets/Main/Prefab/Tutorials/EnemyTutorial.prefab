@@ -98,14 +98,14 @@ MonoBehaviour:
   _text: '<size=150%><sp:35>The enemy <p:short></size>
 
 
-    Application: use as
-    nutrients for biological guard <p:short>
+    Purpose: use as nutrients
+    for biological guard <p:short>
 
 
     <anim:shake><size=150%>Note:</size></anim><p:normal>
 
-    The
-    product is delivered automatically at the terminal.'
+    All
+    products is automatically applied at the terminal.'
   _waitBeforeTextBegin: 0
   _imageBeginAlpha: 0
   _imageAlphaDur: 1
